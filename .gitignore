@@ -1,0 +1,47 @@
+# Diretórios do Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build
+bin/
+obj/
+out/
+Debug/
+Release/
+
+# Dependências do NuGet
+packages/
+!packages/repositories.config
+
+# Configurações do usuário
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# Logs
+*.log
+logs/
+
+# Dados do banco de dados local
+*.mdf
+*.ldf
+*.db
+*.sqlite
+
+# Publicação
+publish/
+wwwroot/
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.pid
+*.cache
+
+# IDEs e editores
+.idea/
+.vscode/
+*.code-workspace
