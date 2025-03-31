@@ -12,7 +12,7 @@ namespace SiteMonitoramento.DAO
         {
             SqlParameter[] parametros = new SqlParameter[5];
             parametros[0] = new SqlParameter("usuarioId", usuario.UsuarioId);
-            parametros[1] = new SqlParameter("nome", usuario.Nome);
+            parametros[1] = new SqlParameter("usuarioNome", usuario.UsuarioNome);
             parametros[2] = new SqlParameter("senha", usuario.Senha);
             parametros[3] = new SqlParameter("email", usuario.Email);
             parametros[4] = new SqlParameter("cpf", usuario.CPF);
@@ -22,7 +22,7 @@ namespace SiteMonitoramento.DAO
         {
             Usuario u = new Usuario();
             u.UsuarioId = Convert.ToInt32(registro["usuarioId"]);
-            u.Nome = registro["nome"].ToString();
+            u.UsuarioNome = registro["usuarioNome"].ToString();
             u.Senha = registro["senha"].ToString();
             u.Email = registro["email"].ToString();
             u.CPF = registro["cpf"].ToString();
@@ -32,14 +32,14 @@ namespace SiteMonitoramento.DAO
         public void Inserir(Usuario usuario)
         {
             string sql =
-            "insert into Usuarios (usuarioId, nome, senha, email, cpf)" +
-            "values ( @usuarioPessoaId, @nome, @senha, @email, @cpf)";
+            "insert into Usuarios (usuarioId, usuarioNome, senha, email, cpf)" +
+            "values ( @usuarioId, @usuarioNome, @senha, @email, @cpf)";
             HelperDAO.ExecutaSQL(sql, CriaParametros(usuario));
         }
         public void Alterar(Usuario usuario)
         {
             string sql =
-            "update Usuarios set nome = @nome, " +
+            "update Usuarios set usuarioNome = @usuarioNome, " +
             "senha = @senha, " +
             "email = @email," +
             "cpf = @cpf where usuarioId = @usuarioId";
@@ -62,7 +62,7 @@ namespace SiteMonitoramento.DAO
         public List<Usuario> Listagem()
         {
             List<Usuario> lista = new List<Usuario>();
-            string sql = "select * from Usuarios order by nome";
+            string sql = "select * from Usuarios order by usuarioNome";
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
             foreach (DataRow registro in tabela.Rows)
                 lista.Add(MontaUsuario(registro));

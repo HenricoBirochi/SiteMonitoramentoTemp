@@ -4,6 +4,6 @@
     {
         public int TipoSensorId { get; set; }
         public string NomeTecnico { get; set; }
-        public string OQueMede { get; set; }
+        public string ParametroMedido { get; set; }
     }
 }
