@@ -6,7 +6,7 @@ namespace SiteMonitoramento.Controllers
 {
     public class UsuarioController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return View();
         }
