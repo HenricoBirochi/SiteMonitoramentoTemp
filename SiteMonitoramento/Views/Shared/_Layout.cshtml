@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - SiteMonitoramento</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("EstilosExtras", required: false)
 </head>
 <body>
     <header>
@@ -29,7 +30,13 @@
                             <a class="nav-link" asp-area="" asp-controller="Usuario" asp-action="Login">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Usuario" asp-action="Cadastro">Cadastro</a>
+                            <a class="nav-link" asp-area="" asp-controller="Usuario" asp-action="Cadastro">Cadastro de Usuário</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Sensor" asp-action="InserirSensor">Cadastro de Sensor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Sensor" asp-action="ListaSensores">Sensores</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Sobre">Sobre</a>

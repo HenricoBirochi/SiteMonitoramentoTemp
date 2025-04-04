@@ -1,0 +1,33 @@
+﻿@model List<Sensor>
+@section EstilosExtras
+{
+    <link href="/css/ListaSensores.css" rel="stylesheet"></link>
+}
+
+<div class="d-flex justify-content-center align-items-center">
+    @foreach (var sensor in Model)
+    {
+        <div class="card p-4">
+            <ul>
+                <li>Código do sensor: @sensor.SensorId</li>
+                <li>Nome do sensor: @sensor.SensorNome</li>
+                <li>Código do tipo de sensor: @sensor.TipoSensorId</li>
+            </ul>
+
+            <!-- Planos Futuros :)
+            <form asp-action="Get" method="get">
+                <input type="hidden" name="curriculoId" value="@sensor.SensorId" />
+                <button class="botoes" type="submit">Exibir o currículo formatado</button>
+            </form>
+            -->
+            <form asp-action="EditarSensor" method="get">
+                <input asp-for="@sensor.SensorId" type="hidden" />
+                <button type="submit">Alterar o sensor</button>
+            </form>
+            <form asp-action="DeletarSensor" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este currículo?');">
+                <input asp-for="@sensor.SensorId" type="hidden" />
+                <button type="submit">Excluir Sensor</button>
+            </form>
+        </div>
+    }
+</div>

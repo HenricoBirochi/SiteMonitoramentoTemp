@@ -76,13 +76,10 @@ namespace SiteMonitoramento.DAO
         public UsuarioSensorDTO MontaUsuarioSensorDTO(DataRow registro)
         {
             UsuarioSensorDTO uSD = new UsuarioSensorDTO();
-            UsuarioSensor uS = new UsuarioSensor();
-            uS.UsuarioSensorId = Convert.ToInt32(registro["usuarioSensorId"]);
-            uS.UsuarioId = Convert.ToInt32(registro["usuarioId"]);
-            uS.SensorId = Convert.ToInt32(registro["sensorId"]);
-            uSD.UsuarioSensor = uS;
+            uSD.UsuarioSensor.UsuarioSensorId = Convert.ToInt32(registro["usuarioSensorId"]);
+            uSD.UsuarioSensor.UsuarioId = Convert.ToInt32(registro["usuarioId"]);
+            uSD.UsuarioSensor.SensorId = Convert.ToInt32(registro["sensorId"]);
             uSD.UsuarioNome = registro["usuarioNome"].ToString();
-            uSD.Senha = registro["senha"].ToString();
             uSD.Email = registro["email"].ToString();
             uSD.CPF = registro["cpf"].ToString();
             uSD.SensorNome = registro["sensorNome"].ToString();
@@ -94,7 +91,7 @@ namespace SiteMonitoramento.DAO
         {
             List<UsuarioSensorDTO> lista = new List<UsuarioSensorDTO>();
             string sql = "SELECT us.usuarioSensorId, us.usuarioId, us.sensorId, " +
-                "u.usuarioNome, u.senha, u.email, u.cpf, " +
+                "u.usuarioNome, u.email, u.cpf, " +
                 "s.sensorNome, s.tipoSensorId " +
                 "FROM UsuarioSensores us " +
                 "INNER JOIN Usuarios u ON us.usuarioId = u.usuarioId " +

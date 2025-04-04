@@ -1,12 +1,11 @@
 ﻿@model Usuario
 
-<div class="d-flex justify-content-center align-items-center vh-100">
+<div class="d-flex justify-content-center align-items-center">
     <div class="card p-4" style="max-width: 400px; width: 100%;">
-        <h2 class="card-title text-center mb-4">Entrar</h2>
+        <h2 class="card-title text-center mb-4">Cadastrar Usuário</h2>
         <form asp-action="Salvar" method="post">
             <div class="mb-3">
-                <label for="UsuarioId" class="form-label">Id do Usuário</label>
-                <input asp-for="UsuarioId" class="form-control" readonly required>
+                <input asp-for="UsuarioId" class="form-control" hidden>
             </div>
             <div class="mb-3">
                 <label for="UsuarioNome" class="form-label">Nome</label>
