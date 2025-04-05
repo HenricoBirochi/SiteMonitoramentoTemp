@@ -32,14 +32,14 @@ namespace SiteMonitoramento.Controllers
                 return View("Erro", new ErrorViewModel(erro.ToString()));
             }
         }
-        public IActionResult EditarSensor(int id)
+        public IActionResult EditarSensor(int SensorId)
         {
             try
             {
                 ViewBag.Operacao = "E";
                 Sensor sensor = new Sensor();
                 SensorDAO dao = new SensorDAO();
-                sensor = dao.Consulta(id);
+                sensor = dao.Consulta(SensorId);
 
                 PreparaListaTipoSensoresParaCombo();
                 return View("CadastroSensor", sensor);
@@ -68,11 +68,13 @@ namespace SiteMonitoramento.Controllers
                 return View("Error", new ErrorViewModel(erro.ToString()));
             }
         }
-        public IActionResult DeletarSensor(int id)
+        public IActionResult DeletarSensor(int SensorId)
         {
             SensorDAO dao = new SensorDAO();
-            dao.Excluir(id);
-            return View("ListaSensores");
+            dao.Excluir(SensorId);
+
+            var sensores = dao.Listagem();
+            return View("ListaSensores", sensores);
         }
         private void PreparaListaTipoSensoresParaCombo()
         {

@@ -1,2 +1,42 @@
-﻿body {
+﻿.caixona {
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+    gap: 10px; /* Espaçamento entre os itens */
+}
+.caixas {
+    display: block;
+    width: 550px;
+    height: 150px;
+    background-color: #c1c1c1;
+    border-radius: 16px;
+    margin-bottom: 10px;
+    position: relative;
+}
+.parametro {
+    position: absolute;
+    left: 5%;
+    top: 31%;
+    width: 9%;
+    height: 34%;
+    border-radius: 8px;
+    background-color: #e0e0e0;
+}
+.dados {
+    position: absolute;
+    left: 18%;
+    top: 26%;
+}
+.formEdit {
+    position: absolute;
+    bottom: 73%;
+    left: 84%;
+}
+.formDelete {
+    position: absolute;
+    bottom: 73%;
+    left: 91%;
+}
+.botao{
+    border-radius: 8px;
 }

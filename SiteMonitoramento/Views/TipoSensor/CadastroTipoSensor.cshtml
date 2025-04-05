@@ -1,4 +1,4 @@
-﻿@model Sensor
+﻿@model TipoSensor
 
 <div class="d-flex justify-content-center align-items-center">
     <div class="card p-4" style="max-width: 400px; width: 100%;">
@@ -8,18 +8,18 @@
                 <input type="hidden" name="Operacao" value="@ViewBag.Operacao">
             </div>
             <div class="mb-3">
-                <input asp-for="SensorId" class="form-control" hidden>
+                <input asp-for="TipoSensorId" class="form-control" hidden>
             </div>
             <div class="mb-3">
-                <label for="SensorNome" class="form-label">Nome do Sensor</label>
-                <input asp-for="SensorNome" class="form-control" placeholder="Digite o Nome do sensor" required>
+                <label for="NomeTecnico" class="form-label">Nome tecnico do sensor</label>
+                <input asp-for="NomeTecnico" class="form-control" placeholder="Digite o Nome tecnico do sensor" required>
             </div>
             <div class="mb-3">
-                <label for="TipoSensorId" class="form-label">Tipo do Sensor</label>
-                <select asp-for="TipoSensorId" asp-items="ViewBag.TipoSensores" class="form-control" required></select>
+                <label for="ParametroMedido" class="form-label">Parametro que é medido</label>
+                <select asp-for="ParametroMedido" class="form-control" required></select>
             </div>
             <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary">Salvar Sensor</button>
+                <button type="submit" class="btn btn-primary">Salvar Tipo de Sensor</button>
             </div>
         </form>
     </div>

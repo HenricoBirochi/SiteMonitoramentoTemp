@@ -57,7 +57,7 @@ namespace SiteMonitoramento.DAO
         public List<Sensor> Listagem()
         {
             List<Sensor> lista = new List<Sensor>();
-            string sql = "select * from Sensores order by sensorNome";
+            string sql = "select * from Sensores";
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
             foreach (DataRow registro in tabela.Rows)
                 lista.Add(MontaSensor(registro));
