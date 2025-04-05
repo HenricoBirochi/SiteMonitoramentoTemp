@@ -33,7 +33,6 @@ logs/
 
 # Publicação
 publish/
-wwwroot/
 
 # Arquivos temporários
 *.tmp
