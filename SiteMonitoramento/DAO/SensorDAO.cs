@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using System;
+using SiteMonitoramento.ViewModels;
 
 namespace SiteMonitoramento.DAO
 {
@@ -75,6 +76,25 @@ namespace SiteMonitoramento.DAO
             };
             DataTable tabela = HelperDAO.ExecutaProcSelect(sql, parametros);
             return Convert.ToInt32(tabela.Rows[0]["MAIOR"]);
+        }
+
+        //Join das tabelas Sensores e TipoSensores
+        public ListaSensorViewModel MontaListaSensorViewModel(DataRow registro)
+        {
+            ListaSensorViewModel ls = new ListaSensorViewModel();
+            ls.SensorId = Convert.ToInt32(registro["sensorId"]);
+            ls.NomeSensor = registro["sensorNome"].ToString();
+            ls.NomeTecnicoSensor = registro["nomeTecnico"].ToString();
+            return ls;
+        }
+        public List<ListaSensorViewModel> ListagemSensoresTipoSensoresJoin()
+        {
+            var lista = new List<ListaSensorViewModel>();
+            string sql = "spListarSensoresTipoSensoresJoin";
+            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, null);
+            foreach (DataRow registro in tabela.Rows)
+                lista.Add(MontaListaSensorViewModel(registro));
+            return lista;
         }
     }
 }

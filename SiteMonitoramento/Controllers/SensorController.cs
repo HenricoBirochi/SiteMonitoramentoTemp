@@ -12,7 +12,7 @@ namespace SiteMonitoramento.Controllers
         public IActionResult ListaSensores()
         {
             SensorDAO dao = new SensorDAO();
-            var sensores = dao.Listagem();
+            var sensores = dao.ListagemSensoresTipoSensoresJoin();
             return View(sensores);
         }
         public IActionResult InserirSensor()
@@ -60,7 +60,7 @@ namespace SiteMonitoramento.Controllers
                     dao.Alterar(sensor);
 
                 //aqui eu pucho a lista dos sensore pra ele conseguir retornar a página que mostra os sensores
-                var sensores = dao.Listagem();
+                var sensores = dao.ListagemSensoresTipoSensoresJoin();
                 return View("ListaSensores", sensores);
             }
             catch (Exception erro)
@@ -73,7 +73,7 @@ namespace SiteMonitoramento.Controllers
             SensorDAO dao = new SensorDAO();
             dao.Excluir(SensorId);
 
-            var sensores = dao.Listagem();
+            var sensores = dao.ListagemSensoresTipoSensoresJoin();
             return View("ListaSensores", sensores);
         }
         private void PreparaListaTipoSensoresParaCombo()

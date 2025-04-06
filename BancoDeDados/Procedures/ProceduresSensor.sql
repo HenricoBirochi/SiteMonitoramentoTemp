@@ -77,3 +77,18 @@ BEGIN
     SELECT * FROM Sensores
 END
 GO
+
+-- ========================================
+-- PROCEDURE: spListarSensoresTipoSensoresJoin
+-- Descrição: Retorna a relação entre as tabelas Sensores e TipoSensores com dados detalhados
+-- Sem parâmetros
+-- ========================================
+CREATE PROCEDURE spListarSensoresTipoSensoresJoin
+AS
+BEGIN
+    SELECT 
+        sensorId, sensorNome, nomeTecnico
+    FROM Sensores s
+    INNER JOIN TipoSensores ts ON ts.tipoSensorId = s.tipoSensorId
+END
+GO
