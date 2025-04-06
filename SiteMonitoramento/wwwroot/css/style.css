@@ -1,4 +1,64 @@
-﻿.tituloSite {
+﻿/*Navbar style*/
+.logo-image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:32px;
+    width:32px;
+    border-radius:8px;
+    background-color:#fb923c;
+}
+
+.logo{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-right: 32px;
+}
+
+.nav-account{
+    display: flex;
+    flex-direction: row;
+    margin-left: 32px;
+}
+
+.nav-account ul li:last-child{
+    padding: 0px 8px;
+    margin-right: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #fb923c;
+    border-radius: 8px;
+    stroke: white;
+    gap: 6px;
+    transition: all ease-in-out 0.3s;
+}
+.nav-account ul li:last-child a{
+    color: white;
+    stroke: white;
+    transition: all ease-in-out 0.3s;
+}
+
+.nav-account ul li:last-child:hover, .nav-account ul li:last-child a:hover{
+    background-color: #d97706;
+}
+
+.navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    transition: all ease-out 0.3s;
+}
+
+.navbar a{
+    transition: all ease-out 0.3s;
+    text-decoration: none;
+}
+
+/*===========================================*/
+
+.tituloSite {
     color: #1E3547;
     font-size: 22px;
 }

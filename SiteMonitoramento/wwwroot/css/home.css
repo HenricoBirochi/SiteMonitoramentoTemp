@@ -5,38 +5,38 @@ a.navbar-brand {
     word-break: break-word;
     font-weight: 600;
     font-size: 1.2rem;
-    color: #0d47a1;
+    color: #f59e0b;
 }
 
 /* Links */
 a {
-    color: #0d6efd;
+    color: #f59e0b;
     transition: color 0.3s ease;
 }
 
     a:hover {
-        color: #0b5ed7;
+        color: #f97316;
     }
 
 /* Botão primário */
 .btn-primary {
     color: #fff;
-    background-color: #0d6efd;
-    border-color: #0a58ca;
+    background-color: #f59e0b;
+    border-color: #f59e0b;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
     .btn-primary:hover {
-        background-color: #0b5ed7;
-        border-color: #0a53be;
+        background-color: #f97316;
+        border-color: #f97316;
     }
 
 /* Nav Pills */
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
     color: #fff;
-    background-color: #0d6efd;
-    border-color: #0a58ca;
+    background-color: #f59e0b;
+    border-color: #f59e0b;
 }
 
 /* Bordas e sombra */
