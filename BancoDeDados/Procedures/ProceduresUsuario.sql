@@ -1,7 +1,7 @@
 -- ========================================
 -- USA O BANCO DE DADOS CRIADO
 -- ========================================
-USE SiteMonitoramentoSensores
+USE HephaiTech
 GO
 
 -- ========================================

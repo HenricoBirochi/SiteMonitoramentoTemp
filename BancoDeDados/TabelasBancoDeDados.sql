@@ -1,13 +1,13 @@
 -- ========================================
 -- CRIA O BANCO DE DADOS
 -- ========================================
-CREATE DATABASE SiteMonitoramentoSensores
+CREATE DATABASE HephaiTech
 GO
 
 -- ========================================
 -- USA O BANCO DE DADOS CRIADO
 -- ========================================
-USE SiteMonitoramentoSensores
+USE HephaiTech
 GO
 
 -- ========================================
