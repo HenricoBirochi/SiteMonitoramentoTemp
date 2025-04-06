@@ -13,10 +13,12 @@
             <div class="mb-3">
                 <label for="NomeTecnico" class="form-label">Nome tecnico do sensor</label>
                 <input asp-for="NomeTecnico" class="form-control" placeholder="Digite o Nome tecnico do sensor" required>
+                <span asp-validation-for="NomeTecnico" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="ParametroMedido" class="form-label">Parametro que é medido</label>
                 <select asp-for="ParametroMedido" class="form-control" required></select>
+                <span asp-validation-for="ParametroMedido" class="text-danger"></span>
             </div>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary">Salvar Tipo de Sensor</button>

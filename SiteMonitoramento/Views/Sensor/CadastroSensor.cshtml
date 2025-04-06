@@ -13,6 +13,7 @@
             <div class="mb-3">
                 <label for="SensorNome" class="form-label">Nome do Sensor</label>
                 <input asp-for="SensorNome" class="form-control" placeholder="Digite o Nome do sensor" required>
+                <span asp-validation-for="SensorNome" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="TipoSensorId" class="form-label">Tipo do Sensor</label>

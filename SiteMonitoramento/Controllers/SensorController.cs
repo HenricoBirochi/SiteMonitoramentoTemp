@@ -54,14 +54,25 @@ namespace SiteMonitoramento.Controllers
             try
             {
                 SensorDAO dao = new SensorDAO();
-                if (Operacao == 'I')
-                    dao.Inserir(sensor);
-                else
-                    dao.Alterar(sensor);
+                ValidaDados(sensor);
+                if (ModelState.IsValid)
+                {
+                    if (Operacao == 'I')
+                        dao.Inserir(sensor);
+                    else
+                        dao.Alterar(sensor);
 
-                //aqui eu pucho a lista dos sensore pra ele conseguir retornar a página que mostra os sensores
-                var sensores = dao.ListagemSensoresTipoSensoresJoin();
-                return View("ListaSensores", sensores);
+
+                    //aqui eu pucho a lista dos sensore pra ele conseguir retornar a página que mostra os sensores
+                    var sensores = dao.ListagemSensoresTipoSensoresJoin();
+                    return View("ListaSensores", sensores);
+                }
+                else
+                {
+                    PreparaListaTipoSensoresParaCombo();
+                    ViewBag.Operacao = Operacao;
+                    return View("CadastroSensor", sensor);
+                }
             }
             catch (Exception erro)
             {
@@ -75,6 +86,13 @@ namespace SiteMonitoramento.Controllers
 
             var sensores = dao.ListagemSensoresTipoSensoresJoin();
             return View("ListaSensores", sensores);
+        }
+        private void ValidaDados(Sensor sensor)
+        {
+            ModelState.Clear(); // limpa os erros criados automaticamente pelo Asp.net (que podem estar com msg em inglês)
+            SensorDAO dao = new SensorDAO();
+            if (string.IsNullOrEmpty(sensor.SensorNome))
+                ModelState.AddModelError("SensorNome", "Preencha o nome.");
         }
         private void PreparaListaTipoSensoresParaCombo()
         {

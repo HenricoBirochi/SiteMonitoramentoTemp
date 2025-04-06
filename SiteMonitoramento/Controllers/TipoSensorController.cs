@@ -52,27 +52,45 @@ namespace SiteMonitoramento.Controllers
             try
             {
                 TipoSensorDAO dao = new TipoSensorDAO();
-                if (Operacao == 'I')
-                    dao.Inserir(tipoSensor);
-                else
-                    dao.Alterar(tipoSensor);
+                ValidaDados(tipoSensor);
+                if (ModelState.IsValid)
+                {
+                    if (Operacao == 'I')
+                        dao.Inserir(tipoSensor);
+                    else
+                        dao.Alterar(tipoSensor);
 
-                //aqui eu pucho a lista dos sensore pra ele conseguir retornar a página que mostra os sensores
-                var tipoSensores = dao.Listagem();
-                return View("ListaTipoSensores", tipoSensores);
+                    //aqui eu pucho a lista dos sensore pra ele conseguir retornar a página que mostra os sensores
+                    var tipoSensores = dao.Listagem();
+                    return View("ListaTipoSensores", tipoSensores);
+                }
+                else
+                {
+                    ViewBag.Operacao = Operacao;
+                    return View("CadastroTipoSensor", tipoSensor);
+                }
             }
             catch (Exception erro)
             {
                 return View("Error", new ErrorViewModel(erro.ToString()));
             }
         }
-        public IActionResult DeletarSensor(int TipoSensorId)
+        public IActionResult DeletarTipoSensor(int TipoSensorId)
         {
             TipoSensorDAO dao = new TipoSensorDAO();
             dao.Excluir(TipoSensorId);
 
             var tipoSensores = dao.Listagem();
             return View("ListaSensores", tipoSensores);
+        }
+        private void ValidaDados(TipoSensor tipoSensor)
+        {
+            ModelState.Clear(); // limpa os erros criados automaticamente pelo Asp.net (que podem estar com msg em inglês)
+            TipoSensorDAO dao = new TipoSensorDAO();
+            if (string.IsNullOrEmpty(tipoSensor.NomeTecnico))
+                ModelState.AddModelError("NomeTecnico", "Preencha o nome tecnico.");
+            if (string.IsNullOrEmpty(tipoSensor.ParametroMedido))
+                ModelState.AddModelError("ParametroMedido", "Preencha o nome do parâmetro.");
         }
     }
 }

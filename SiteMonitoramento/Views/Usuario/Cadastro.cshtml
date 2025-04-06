@@ -10,18 +10,22 @@
             <div class="mb-3">
                 <label for="UsuarioNome" class="form-label">Nome</label>
                 <input asp-for="UsuarioNome" class="form-control" placeholder="Digite seu Nome completo" required>
+                <span asp-validation-for="UsuarioNome" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="Email" class="form-label">E-mail</label>
                 <input asp-for="Email" class="form-control" placeholder="Digite seu e-mail" required>
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="Senha" class="form-label">Senha</label>
-                <input asp-for="Senha" class="form-control" placeholder="Digite sua senha" required>
+                <input asp-for="Senha" class="form-control" placeholder="No mínimo 8 caracteres" required>
+                <span asp-validation-for="Senha" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="CPF" class="form-label">CPF</label>
                 <input asp-for="CPF" class="form-control" placeholder="Digite seu CPF" required>
+                <span asp-validation-for="CPF" class="text-danger"></span>
             </div>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary">Criar usuário</button>
