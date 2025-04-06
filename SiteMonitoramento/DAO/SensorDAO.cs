@@ -27,46 +27,53 @@ namespace SiteMonitoramento.DAO
 
         public void Inserir(Sensor sensor)
         {
-            string sql =
-            "insert into Sensores (sensorId, sensorNome, tipoSensorId)" +
-            "values ( @sensorId, @sensorNome, @tipoSensorId)";
-            HelperDAO.ExecutaSQL(sql, CriaParametros(sensor));
+            string sql = "spInserirSensor";
+            HelperDAO.ExecutaProc(sql, CriaParametros(sensor));
         }
+
         public void Alterar(Sensor sensor)
         {
-            string sql =
-            "update Sensores set sensorNome = @sensorNome, " +
-            "tipoSensorId = @tipoSensorId " +
-            "where sensorId = @sensorId";
-            HelperDAO.ExecutaSQL(sql, CriaParametros(sensor));
+            string sql = "spAlterarSensor";
+            HelperDAO.ExecutaProc(sql, CriaParametros(sensor));
         }
+
         public void Excluir(int id)
         {
-            string sql = "delete Sensores where sensorId = " + id;
-            HelperDAO.ExecutaSQL(sql, null);
+            string sql = "spExcluirSensor";
+            SqlParameter[] parametros = { new SqlParameter("@sensorId", id) };
+            HelperDAO.ExecutaProc(sql, parametros);
         }
+
         public Sensor Consulta(int id)
         {
-            string sql = "select * from Sensores where sensorId = " + id;
-            DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
+            string sql = "spConsultarSensor";
+            SqlParameter[] parametros = { new SqlParameter("@sensorId", id) };
+            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, parametros);
             if (tabela.Rows.Count == 0)
                 return null;
             else
                 return MontaSensor(tabela.Rows[0]);
         }
+
         public List<Sensor> Listagem()
         {
             List<Sensor> lista = new List<Sensor>();
-            string sql = "select * from Sensores";
-            DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
+            string sql = "spListarSensores";
+            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, null);
             foreach (DataRow registro in tabela.Rows)
                 lista.Add(MontaSensor(registro));
             return lista;
         }
+
         public int ProximoId()
         {
-            string sql = "select isnull(max(sensorId) +1, 1) as 'MAIOR' from Sensores";
-            DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
+            string sql = "spProximoId";
+            SqlParameter[] parametros = 
+            { 
+                new SqlParameter("@tabela", "Sensores"),
+                new SqlParameter("@nomeDoCampoId", "sensorId") 
+            };
+            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, parametros);
             return Convert.ToInt32(tabela.Rows[0]["MAIOR"]);
         }
     }

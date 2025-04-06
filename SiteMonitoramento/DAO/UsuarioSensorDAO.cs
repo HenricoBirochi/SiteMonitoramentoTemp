@@ -27,46 +27,53 @@ namespace SiteMonitoramento.DAO
 
         public void Inserir(UsuarioSensor usuarioSensor)
         {
-            string sql =
-            "insert into UsuarioSensores (usuarioSensorId, usuarioId, sensorId)" +
-            "values ( @usuarioSensorId, @usuarioId, @sensorId)";
-            HelperDAO.ExecutaSQL(sql, CriaParametros(usuarioSensor));
+            string sql = "spInserirUsuarioSensor";
+            HelperDAO.ExecutaProc(sql, CriaParametros(usuarioSensor));
         }
+
         public void Alterar(UsuarioSensor usuarioSensor)
         {
-            string sql =
-            "update UsuarioSensores set usuarioId = @usuarioId, " +
-            "sensorId = @sensorId " +
-            "where usuarioSensorId = @usuarioSensorId";
-            HelperDAO.ExecutaSQL(sql, CriaParametros(usuarioSensor));
+            string sql = "spAlterarUsuarioSensor";
+            HelperDAO.ExecutaProc(sql, CriaParametros(usuarioSensor));
         }
+
         public void Excluir(int id)
         {
-            string sql = "delete UsuarioSensores where usuarioSensorId = " + id;
-            HelperDAO.ExecutaSQL(sql, null);
+            string sql = "spExcluirUsuarioSensor";
+            SqlParameter[] parametros = { new SqlParameter("@usuarioSensorId", id) };
+            HelperDAO.ExecutaProc(sql, parametros);
         }
+
         public UsuarioSensor Consulta(int id)
         {
-            string sql = "select * from UsuarioSensores where usuarioSensorId = " + id;
-            DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
+            string sql = "spConsultarUsuarioSensor";
+            SqlParameter[] parametros = { new SqlParameter("@usuarioSensorId", id) };
+            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, parametros);
             if (tabela.Rows.Count == 0)
                 return null;
             else
                 return MontaUsuarioSensor(tabela.Rows[0]);
         }
+
         public List<UsuarioSensor> Listagem()
         {
             List<UsuarioSensor> lista = new List<UsuarioSensor>();
-            string sql = "select * from UsuarioSensores";
-            DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
+            string sql = "spListarUsuarioSensores";
+            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, null);
             foreach (DataRow registro in tabela.Rows)
                 lista.Add(MontaUsuarioSensor(registro));
             return lista;
         }
+
         public int ProximoId()
         {
-            string sql = "select isnull(max(usuarioSensorId) +1, 1) as 'MAIOR' from UsuarioSensores";
-            DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
+            string sql = "spProximoId";
+            SqlParameter[] parametros =
+            {
+                new SqlParameter("@tabela", "UsuarioSensores"),
+                new SqlParameter("@nomeDoCampoId", "usuarioSensorId")
+            };
+            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, parametros);
             return Convert.ToInt32(tabela.Rows[0]["MAIOR"]);
         }
 
@@ -90,13 +97,8 @@ namespace SiteMonitoramento.DAO
         public List<UsuarioSensorDTO> ListagemComJoin()
         {
             List<UsuarioSensorDTO> lista = new List<UsuarioSensorDTO>();
-            string sql = "SELECT us.usuarioSensorId, us.usuarioId, us.sensorId, " +
-                "u.usuarioNome, u.email, u.cpf, " +
-                "s.sensorNome, s.tipoSensorId " +
-                "FROM UsuarioSensores us " +
-                "INNER JOIN Usuarios u ON us.usuarioId = u.usuarioId " +
-                "INNER JOIN Sensores s ON us.sensorId = s.sensorId";
-            DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
+            string sql = "spListarUsuarioSensorJoin";
+            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, null);
             foreach (DataRow registro in tabela.Rows)
                 lista.Add(MontaUsuarioSensorDTO(registro));
             return lista;
