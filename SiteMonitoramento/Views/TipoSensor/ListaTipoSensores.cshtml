@@ -1,4 +1,8 @@
 ﻿@model List<TipoSensor>
+@section EstilosExtras
+{
+    <link href="/css/sensores.css" rel="stylesheet">
+}
 
 <div class="caixona">
     @foreach (var sensor in Model)
@@ -6,21 +10,21 @@
         <div class="caixas">
             <div class="parametro"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#f58f05" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thermometer-sun-icon lucide-thermometer-sun"><path d="M12 9a4 4 0 0 0-2 7.5" /><path d="M12 3v2" /><path d="m6.6 18.4-1.4 1.4" /><path d="M20 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" /><path d="M4 13H2" /><path d="M6.34 7.34 4.93 5.93" /></svg></div>
             <div class="dados">
-                <p>Nome do sensor <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f58f05" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg> </p>
-                <p>Código do tipo de sensor <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f58f05" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg> @sensor.TipoSensorId</p>
+                <p>Nome do tipo de sensor <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f58f05" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg> @sensor.NomeTecnico</p>
+                <p>Parametro medido pelo sensor <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f58f05" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg> @sensor.ParametroMedido</p>
             </div>
             <!-- Planos Futuros :)
             <form asp-action="Get" method="get">
-                <input type="hidden" name="SensorId" value="" />
-                <button class="botoes" type="submit">Exibir o currículo formatado</button>
+                <input type="hidden" name="SensorId" value="sensor.SensorId" />
+                <button class="botoes" type="submit">Exibir a Lista de Sensores formatada</button>
             </form>
             -->
             <form asp-action="EditarSensor" method="get" class="formEdit">
-                <input name="SensorId" value="" type="hidden" />
+                <input name="SensorId" value="@sensor.TipoSensorId" type="hidden" />
                 <button type="submit" class="botao"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil-icon lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /><path d="m15 5 4 4" /></svg></button>
             </form>
-            <form asp-action="DeletarSensor" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este currículo?');" class="formDelete">
-                <input name="SensorId" value="" type="hidden" />
+            <form asp-action="DeletarSensor" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este Tipo de Sensor?');" class="formDelete">
+                <input name="SensorId" value="@sensor.TipoSensorId" type="hidden" />
                 <button type="submit" class="botao"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x-icon lucide-circle-x"><circle cx="12" cy="12" r="10" /><path d="m15 9-6 6" /><path d="m9 9 6 6" /></svg></button>
             </form>
         </div>

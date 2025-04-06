@@ -1,7 +1,195 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    <link href="/css/home.css" rel="stylesheet">
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to TempMeasure</h1>
-</div>
+<section class="box">
+    <div class="max-w-4xl mx-auto px-6">
+        <h1 class="Titulo">Monitoramento Inteligente de Motores</h1>
+        <p class="text-lg text-gray-700 mb-6">
+            Plataforma tecnológica para análise em tempo real dos parâmetros físicos que impactam diretamente a saúde e desempenho dos motores industriais e automotivos.
+            Nosso sistema permite que gestores, engenheiros e técnicos tenham acesso instantâneo às condições de operação dos motores, reduzindo custos com manutenção e aumentando a eficiência operacional.
+        </p>
+    </div>
+</section>
+
+<!-- Como funciona -->
+<section class="box">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+        <div>
+            <h2 class="Titulo">Como Funciona o Sistema?</h2>
+            <p class="text-gray-700 mb-4">
+                Utilizamos sensores embarcados estrategicamente instalados em motores elétricos e mecânicos. Esses sensores capturam dados ambientais como temperatura, umidade e luminosidade e enviam as informações via rede (Wi-Fi, LoRa ou Bluetooth) para um servidor central.
+            </p>
+            <p class="text-gray-700 mb-4">
+                A partir daí, os dados são processados por algoritmos que analisam tendências, detectam padrões anormais e disparam alertas personalizados para cada tipo de risco identificado.
+            </p>
+            <p class="text-gray-700">
+                O painel de controle apresenta gráficos, relatórios e status em tempo real, acessíveis via desktop ou aplicativo mobile.
+            </p>
+        </div>
+        <!-- Botão intuitivo para já visualizar os gráficos -->
+        <div class="text-center">
+            <a href="/Home/PrototipoDashboards" class="btn btn-primary btn-lg mt-2">Ver Gráficos</a>
+        </div>
+    </div>
+</section>
+
+<!-- O que monitoramos -->
+<section class="box">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+        <h2 class="Titulo">Parâmetros Monitorados</h2>
+        <div class="grid md:grid-cols-3 gap-8 text-left">
+            <!-- Temperatura -->
+            <h3 class="text-xl font-semibold mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff8800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thermometer-icon lucide-thermometer"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" /></svg>
+                Temperatura</h3>
+            <p class="mb-4 text-gray-700">
+                O monitoramento térmico é essencial para detectar superaquecimentos que podem resultar em derretimento de isolantes, falhas nos rolamentos ou até incêndios.
+                Motores que operam acima da temperatura ideal consomem mais energia e reduzem drasticamente sua vida útil.
+            </p>
+            <p class="text-sm mb-4">
+                <strong>Exemplo real:</strong> em sistemas HVAC, motores com superaquecimento comprometem o ar condicionado de ambientes inteiros.
+            </p>
+
+            <!-- Umidade -->
+            <h3 class="text-xl font-semibold mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00b3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-droplets-icon lucide-droplets"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z" /><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97" /></svg>
+            Umidade</h3>
+            <p class="mb-4 text-gray-700">
+                Umidade elevada pode causar condensação dentro dos motores, levando à corrosão de contatos e curto-circuitos.
+                Também contribui para a formação de mofo e degradação de materiais sensíveis.
+            </p>
+            <p class="text-sm mb-4">
+                <strong>Aplicações práticas:</strong> ambientes fabris com variações bruscas de temperatura exigem esse controle para evitar paradas inesperadas.
+            </p>
+
+            <!-- Luminosidade -->
+            <h3 class="text-xl font-semibold mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffbb00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lightbulb-icon lucide-lightbulb"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></svg>
+                Luminosidade</h3>
+            <p class="mb-4 text-gray-700">
+                A detecção de luz em compartimentos normalmente escuros pode indicar aberturas não autorizadas, manutenção não programada ou falhas de vedação.
+                Ideal para sistemas de segurança e análise de integridade visual.
+            </p>
+            <p class="text-sm mb-4">
+                <strong>Caso de uso:</strong> painéis elétricos que foram abertos por funcionários sem registro geram histórico visual de atividade.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Como Monitoramos -->
+<section class="box">
+    <!-- Lista de Sensores -->
+    <div class="container py-5">
+        <h2 class="Titulo">Sensores Utilizados</h2>
+        <div class="row justify-content-center text-center">
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <img src="~/img/Sensores/DHT11.png" class="card-img-top p-3" alt="Sensor DHT11">
+                    <div class="card-body">
+                        <h5 class="card-title">Sensor DHT11</h5>
+                        <p class="card-text">Ideal para medir temperatura e umidade em aplicações básicas. Econômico, compacto e fácil de integrar.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <img src="~/img/Sensores/DHT22.png" class="card-img-top p-3" alt="Sensor DHT22">
+                    <div class="card-body">
+                        <h5 class="card-title">Sensor DHT22</h5>
+                        <p class="card-text">Mais preciso que o DHT11, ideal para ambientes que exigem maior exatidão na leitura de temperatura e umidade.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <img src="~/img/Sensores/FotoSensor.png" class="card-img-top p-3" alt="Sensor de Luminosidade">
+                    <div class="card-body">
+                        <h5 class="card-title">FotoSensor</h5>
+                        <p class="card-text">Utilizado para medir a intensidade da luz em ambientes fechados dos motores, ajudando em diagnósticos visuais.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <img src="~/img/Sensores/RTC.png" class="card-img-top p-3" alt="RTC">
+                    <div class="card-body">
+                        <h5 class="card-title">RTC - Relógio de Tempo Real</h5>
+                        <p class="card-text">Permite registrar dados com marcação precisa de horário, essencial para auditoria e histórico do funcionamento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão intuitivo para acessar os sensores -->
+    <div class="text-center">
+        <a href="/TipoSensor/ListaTipoSensores" class="btn btn-primary btn-lg mt-2">Ver Sensores</a>
+    </div>
+</section>
+
+<!-- Benefícios do sistema - 3 linhas, 2 colunas fixas -->
+<section class="box">
+    <div class="py-5">
+        <div class="container text-center">
+            <h2 class="Titulo">Vantagens da Nossa Solução</h2>
+
+            <!-- Linha 1 -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="p-4 bg-white border rounded-3 shadow-sm text-start h-100">
+                        <h4 class="mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#313e44" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hammer-icon lucide-hammer"><path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9" /><path d="m18 15 4-4" /><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5" /></svg>
+                            Prevenção de falhas</h4>
+                        <p>Identificação precoce de riscos evita desligamentos não planejados e aumenta a disponibilidade dos equipamentos.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-4 bg-white border rounded-3 shadow-sm text-start h-100">
+                        <h4 class="mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffea00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-dollar-sign-icon lucide-circle-dollar-sign"><circle cx="12" cy="12" r="10" /><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" /><path d="M12 18V6" /></svg>
+                            Economia com manutenção</h4>
+                        <p>Redução de gastos com reparos corretivos e substituição de peças, com foco em manutenção preditiva.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Linha 2 -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="p-4 bg-white border rounded-3 shadow-sm text-start h-100">
+                        <h4 class="mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00ffb3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-no-axes-combined-icon lucide-chart-no-axes-combined"><path d="M12 16v5" /><path d="M16 14v7" /><path d="M20 10v11" /><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15" /><path d="M4 18v3" /><path d="M8 14v7" /></svg>
+                            Aumento de eficiência</h4>
+                        <p>Com dados em tempo real, é possível ajustar processos produtivos e reduzir o consumo de energia.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-4 bg-white border rounded-3 shadow-sm text-start h-100">
+                        <h4 class="mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00bfff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-line-icon lucide-chart-line"><path d="M3 3v16a2 2 0 0 0 2 2h16" /><path d="m19 9-5 5-4-4-3 3" /></svg>
+                            Análises e relatórios</h4>
+                        <p>Dashboard completo com visualizações gráficas, históricos comparativos e exportação de relatórios gerenciais.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Linha 3 -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="p-4 bg-white border rounded-3 shadow-sm text-start h-100">
+                        <h4 class="mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fbff00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell-ring-icon lucide-bell-ring"><path d="M10.268 21a2 2 0 0 0 3.464 0" /><path d="M22 8c0-2.3-.8-4.3-2-6" /><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /><path d="M4 2C2.8 3.7 2 5.7 2 8" /></svg>
+                        Alertas personalizados</h4>
+                        <p>Notificações instantâneas por e-mail, SMS ou aplicativo ao atingir níveis críticos definidos pelo usuário.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-4 bg-white border rounded-3 shadow-sm text-start h-100">
+                        <h4 class="mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2d3e43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock-keyhole-icon lucide-lock-keyhole"><circle cx="12" cy="16" r="1" /><rect x="3" y="10" width="18" height="12" rx="2" /><path d="M7 10V7a5 5 0 0 1 10 0v3" /></svg>
+                            Segurança operacional</h4>
+                        <p>Monitoramento de anomalias visuais e ambientais que indicam acesso indevido ou situações de risco.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

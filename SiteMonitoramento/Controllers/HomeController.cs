@@ -19,5 +19,9 @@ namespace SiteMonitoramento.Controllers
         {
             return View();
         }
+        public IActionResult PrototipoDashboards()
+        {
+            return View();
+        }
     }
 }
