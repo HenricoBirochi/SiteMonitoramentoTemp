@@ -39,17 +39,6 @@ a {
     border-color: #0a58ca;
 }
 
-/* Responsividade da fonte */
-html {
-    font-size: 14px;
-}
-
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
-}
-
 /* Bordas e sombra */
 .border-top {
     border-top: 1px solid #dee2e6;
@@ -88,8 +77,8 @@ html {
 
 body {
     margin-bottom: 60px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
+    font-family: "Winky Sans", sans-serif;
     color: #212529;
 }
 

@@ -1,4 +1,11 @@
-﻿.caixona {
+﻿.titulo{
+    display: flex;
+    justify-content: center;
+}
+.titulo h3{
+    margin-right: 6px;
+}
+.caixona {
     display: grid;
     place-items: center;
     grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
