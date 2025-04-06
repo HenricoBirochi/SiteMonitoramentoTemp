@@ -1,7 +1,3 @@
-Claro, Edgar! Aqui está uma sugestão de README para o seu novo projeto, seguindo o estilo visual e textual que você usou no do Omnifood, mas adaptado para um tom mais técnico e voltado para IoT e ASP.NET Core MVC:
-
----
-
 # 🌡️ Sistema de Monitoramento IoT para Controle Térmico de Estufas de Secagem de Motores Elétricos
 
 <p align="center">
