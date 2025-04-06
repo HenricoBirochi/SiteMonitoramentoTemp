@@ -34,11 +34,11 @@ namespace SiteMonitoramento.Controllers
                 if (ModelState.IsValid)
                 {
                     dao.Inserir(usuario);
-                    return View("Index");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    return View("Cadastro", usuario);
+                    return RedirectToAction("Index", "Home");
                 }
             }
             catch (Exception erro)

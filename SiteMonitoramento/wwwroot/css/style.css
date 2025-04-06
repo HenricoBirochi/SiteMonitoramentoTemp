@@ -123,7 +123,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    font-family: "Winky Sans", sans-serif;
+    font-family: "Inter", sans-serif;
 }
 .footer {
     position: absolute;
