@@ -8,7 +8,8 @@
     display: block;
     width: 550px;
     height: 150px;
-    background-color: #c1c1c1;
+    border: 2px solid #dcdcdc;
+    box-shadow: #dcdcdc 0px 10px 8px;
     border-radius: 16px;
     margin-bottom: 10px;
     position: relative;
@@ -20,7 +21,6 @@
     width: 9%;
     height: 34%;
     border-radius: 8px;
-    background-color: #e0e0e0;
 }
 .dados {
     position: absolute;
