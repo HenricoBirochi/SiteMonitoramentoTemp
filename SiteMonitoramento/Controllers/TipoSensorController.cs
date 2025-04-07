@@ -81,7 +81,7 @@ namespace SiteMonitoramento.Controllers
             dao.Excluir(TipoSensorId);
 
             var tipoSensores = dao.Listagem();
-            return View("ListaSensores", tipoSensores);
+            return View("ListaTipoSensores", tipoSensores);
         }
         private void ValidaDados(TipoSensor tipoSensor)
         {
