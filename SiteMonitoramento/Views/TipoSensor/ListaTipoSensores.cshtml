@@ -6,20 +6,20 @@
 
 <div class="titulo">
     <h3>Tipo de Sensores</h3>
-    <form asp-action="InserirTipoSensor" method="post">
+    <form asp-action="Create" method="post">
         <button type="submit" class="botao">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-plus-icon lucide-clipboard-plus"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><path d="M9 14h6" /><path d="M12 17v-6" /></svg>
         </button>
     </form>
 </div>
 <div class="caixona">
-    @foreach (var sensor in Model)
+    @foreach (var tipoSensor in Model)
     {
         <div class="caixas">
             <div class="parametro"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#f58f05" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-thermometer-sun-icon lucide-thermometer-sun"><path d="M12 9a4 4 0 0 0-2 7.5" /><path d="M12 3v2" /><path d="m6.6 18.4-1.4 1.4" /><path d="M20 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" /><path d="M4 13H2" /><path d="M6.34 7.34 4.93 5.93" /></svg></div>
             <div class="dados">
-                <p>@sensor.NomeTecnico</p>
-                <p>@sensor.ParametroMedido</p>
+                <p>@tipoSensor.NomeTecnico</p>
+                <p>@tipoSensor.ParametroMedido</p>
             </div>
             <!-- Planos Futuros :)
             <form asp-action="Get" method="get">
@@ -27,14 +27,14 @@
                 <button class="botoes" type="submit">Exibir a Lista de Sensores formatada</button>
             </form>
             -->
-            <form asp-action="EditarTipoSensor" method="get" class="formEdit">
-                <input name="TipoSensorId" value="@sensor.TipoSensorId" type="hidden" />
+            <form asp-action="Edit" method="get" class="formEdit">
+                <input name="id" value="@tipoSensor.TipoSensorId" type="hidden" />
                 <button type="submit" class="botao">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil-icon lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /><path d="m15 5 4 4" /></svg>
                 </button>
             </form>
-            <form asp-action="DeletarTipoSensor" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este Tipo de Sensor?');" class="formDelete">
-                <input name="TipoSensorId" value="@sensor.TipoSensorId" type="hidden" />
+            <form asp-action="Delete" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este Tipo de Sensor?');" class="formDelete">
+                <input name="id" value="@tipoSensor.TipoSensorId" type="hidden" />
                 <button type="submit" class="botao">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line x1="10" x2="10" y1="11" y2="17" /><line x1="14" x2="14" y1="11" y2="17" /></svg>
                 </button>

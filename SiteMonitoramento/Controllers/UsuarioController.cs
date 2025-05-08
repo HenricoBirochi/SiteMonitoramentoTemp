@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SiteMonitoramento.DAO;
 using SiteMonitoramento.Models;
 using System;
@@ -58,6 +59,28 @@ namespace SiteMonitoramento.Controllers
                 ModelState.AddModelError("Email", "Preencha o email corretamente.");
             if (string.IsNullOrEmpty(usuario.CPF))
                 ModelState.AddModelError("CPF", "Preencha o CPF corretamente.");
+        }
+
+        //Login e LogOff
+        public IActionResult FazLogin(string email, string senha)
+        {
+            //Este é apenas um exemplo, aqui você deve consultar na sua tabela de usuários
+            //se existe esse usuário e senha
+            if (email == "admin" && senha == "1234")
+            {
+                HttpContext.Session.SetString("Logado", "true");
+                return RedirectToAction("index", "Home");
+            }
+            else
+            {
+                ViewBag.Erro = "Usuário ou senha inválidos!";
+                return View("Index");
+            }
+        }
+        public IActionResult LogOff()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
         }
     }
 }

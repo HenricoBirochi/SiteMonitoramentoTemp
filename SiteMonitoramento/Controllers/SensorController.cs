@@ -4,60 +4,41 @@ using SiteMonitoramento.DAO;
 using SiteMonitoramento.Models;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace SiteMonitoramento.Controllers
 {
-    public class SensorController : Controller
+    public class SensorController : PadraoController<Sensor>
     {
-        public IActionResult ListaSensores()
+        public SensorController()
+        {
+            DAO = new SensorDAO();
+            GeraProximoId = true;
+            NomeViewIndex = "ListaSensores";
+            NomeViewForm = "CadastroSensor";
+        }
+
+        public override IActionResult Index()
         {
             SensorDAO dao = new SensorDAO();
             var sensores = dao.ListagemSensoresTipoSensoresJoin();
-            return View(sensores);
+            return View("ListaSensores", sensores);
         }
-        public IActionResult InserirSensor()
+        protected override void PreencheDadosParaView(string Operacao, Sensor model)
         {
-            try
-            {
-                ViewBag.Operacao = "I";
-                Sensor sensor = new Sensor();
-                SensorDAO dao = new SensorDAO();
-                sensor.SensorId = dao.ProximoId();
-
-                PreparaListaTipoSensoresParaCombo();
-                return View("CadastroSensor", sensor);
-            }
-            catch (Exception erro)
-            {
-                return View("Erro", new ErrorViewModel(erro.ToString()));
-            }
+            if (GeraProximoId && Operacao == "I")
+                model.SensorId = DAO.ProximoId();
+            PreparaListaTipoSensoresParaCombo();
         }
-        public IActionResult EditarSensor(int SensorId)
-        {
-            try
-            {
-                ViewBag.Operacao = "E";
-                Sensor sensor = new Sensor();
-                SensorDAO dao = new SensorDAO();
-                sensor = dao.Consulta(SensorId);
-
-                PreparaListaTipoSensoresParaCombo();
-                return View("CadastroSensor", sensor);
-            }
-            catch (Exception erro)
-            {
-                return View("Error", new ErrorViewModel(erro.ToString()));
-            }
-        }
-        public IActionResult Salvar(Sensor sensor, char Operacao)
+        public override IActionResult Save(Sensor sensor, string Operacao)
         {
             try
             {
                 SensorDAO dao = new SensorDAO();
-                ValidaDados(sensor);
+                ValidaDados(sensor, Operacao);
                 if (ModelState.IsValid)
                 {
-                    if (Operacao == 'I')
+                    if (Operacao == "I")
                         dao.Inserir(sensor);
                     else
                         dao.Alterar(sensor);
@@ -79,19 +60,17 @@ namespace SiteMonitoramento.Controllers
                 return View("Error", new ErrorViewModel(erro.ToString()));
             }
         }
-        public IActionResult DeletarSensor(int SensorId)
-        {
-            SensorDAO dao = new SensorDAO();
-            dao.Delete(SensorId);
-
-            var sensores = dao.ListagemSensoresTipoSensoresJoin();
-            return View("ListaSensores", sensores);
-        }
-        private void ValidaDados(Sensor sensor)
+        protected override void ValidaDados(Sensor model, string operacao)
         {
             ModelState.Clear(); // limpa os erros criados automaticamente pelo Asp.net (que podem estar com msg em inglês)
             SensorDAO dao = new SensorDAO();
-            if (string.IsNullOrEmpty(sensor.SensorNome))
+            if (operacao == "I" && DAO.Consulta(model.SensorId) != null)
+                ModelState.AddModelError("Id", "Código já está em uso!");
+            if (operacao == "A" && DAO.Consulta(model.SensorId) == null)
+                ModelState.AddModelError("Id", "Este registro não existe!");
+            if (model.SensorId <= 0)
+                ModelState.AddModelError("Id", "Id inválido!");
+            if (string.IsNullOrEmpty(model.SensorNome))
                 ModelState.AddModelError("SensorNome", "Preencha o nome.");
         }
         private void PreparaListaTipoSensoresParaCombo()
