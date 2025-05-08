@@ -9,7 +9,7 @@ GO
 -- Descrição: Insere um novo registro na tabela Sensores
 -- Parâmetros: sensorId (INT), sensorNome (NVARCHAR), tipoSensorId (INT)
 -- ========================================
-CREATE PROCEDURE spInserirSensor
+CREATE PROCEDURE spInserirSensores
     @sensorId INT,
     @sensorNome NVARCHAR(100),
     @tipoSensorId INT
@@ -25,7 +25,7 @@ GO
 -- Descrição: Atualiza os dados de um sensor existente na tabela Sensores
 -- Parâmetros: sensorId (INT), sensorNome (NVARCHAR), tipoSensorId (INT)
 -- ========================================
-CREATE PROCEDURE spAlterarSensor
+CREATE PROCEDURE spAlterarSensores
     @sensorId INT,
     @sensorNome NVARCHAR(100),
     @tipoSensorId INT
@@ -35,46 +35,6 @@ BEGIN
     SET sensorNome = @sensorNome,
         tipoSensorId = @tipoSensorId
     WHERE sensorId = @sensorId
-END
-GO
-
--- ========================================
--- PROCEDURE: spExcluirSensor
--- Descrição: Exclui um sensor com base no ID informado
--- Parâmetro: sensorId (INT)
--- ========================================
-CREATE PROCEDURE spExcluirSensor
-    @sensorId INT
-AS
-BEGIN
-    DELETE FROM Sensores
-    WHERE sensorId = @sensorId
-END
-GO
-
--- ========================================
--- PROCEDURE: spConsultarSensor
--- Descrição: Retorna um sensor específico pelo seu ID
--- Parâmetro: sensorId (INT)
--- ========================================
-CREATE PROCEDURE spConsultarSensor
-    @sensorId INT
-AS
-BEGIN
-    SELECT * FROM Sensores
-    WHERE sensorId = @sensorId
-END
-GO
-
--- ========================================
--- PROCEDURE: spListarSensores
--- Descrição: Lista todos os sensores cadastrados na tabela Sensores
--- Sem parâmetros
--- ========================================
-CREATE PROCEDURE spListarSensores
-AS
-BEGIN
-    SELECT * FROM Sensores
 END
 GO
 

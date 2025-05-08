@@ -78,7 +78,7 @@ namespace SiteMonitoramento.Controllers
         public IActionResult DeletarTipoSensor(int TipoSensorId)
         {
             TipoSensorDAO dao = new TipoSensorDAO();
-            dao.Excluir(TipoSensorId);
+            dao.Delete(TipoSensorId);
 
             var tipoSensores = dao.Listagem();
             return View("ListaTipoSensores", tipoSensores);

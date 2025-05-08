@@ -6,9 +6,9 @@ using SiteMonitoramento.Models;
 
 namespace SiteMonitoramento.DAO
 {
-    public class UsuarioDAO
+    public class UsuarioDAO : PadraoDAO<Usuario>
     {
-        private SqlParameter[] CriaParametros(Usuario usuario)
+        protected override SqlParameter[] CriaParametros(Usuario usuario)
         {
             SqlParameter[] parametros = new SqlParameter[5];
             parametros[0] = new SqlParameter("usuarioId", usuario.UsuarioId);
@@ -18,7 +18,7 @@ namespace SiteMonitoramento.DAO
             parametros[4] = new SqlParameter("cpf", usuario.CPF);
             return parametros;
         }
-        private Usuario MontaUsuario(DataRow registro)
+        protected override Usuario MontaModel(DataRow registro)
         {
             Usuario u = new Usuario();
             u.UsuarioId = Convert.ToInt32(registro["usuarioId"]);
@@ -28,47 +28,6 @@ namespace SiteMonitoramento.DAO
             u.CPF = registro["cpf"].ToString();
             return u;
         }
-
-        public void Inserir(Usuario usuario)
-        {
-            string sql = "spInserirUsuario";
-            HelperDAO.ExecutaProc(sql, CriaParametros(usuario));
-        }
-
-        public void Alterar(Usuario usuario)
-        {
-            string sql = "spAlterarUsuario";
-            HelperDAO.ExecutaProc(sql, CriaParametros(usuario));
-        }
-
-        public void Excluir(int id)
-        {
-            string sql = "spExcluirUsuario";
-            SqlParameter[] parametros = { new SqlParameter("@usuarioId", id) };
-            HelperDAO.ExecutaProc(sql, parametros);
-        }
-
-        public Usuario Consulta(int id)
-        {
-            string sql = "spConsultarUsuario";
-            SqlParameter[] parametros = { new SqlParameter("@usuarioId", id) };
-            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, parametros);
-            if (tabela.Rows.Count == 0)
-                return null;
-            else
-                return MontaUsuario(tabela.Rows[0]);
-        }
-
-        public List<Usuario> Listagem()
-        {
-            List<Usuario> lista = new List<Usuario>();
-            string sql = "spListarUsuarios";
-            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, null);
-            foreach (DataRow registro in tabela.Rows)
-                lista.Add(MontaUsuario(registro));
-            return lista;
-        }
-
         public int ProximoId()
         {
             string sql = "spProximoId";
@@ -79,6 +38,16 @@ namespace SiteMonitoramento.DAO
             };
             DataTable tabela = HelperDAO.ExecutaProcSelect(sql, parametros);
             return Convert.ToInt32(tabela.Rows[0]["MAIOR"]);
+        }
+
+        protected override void SetTabela()
+        {
+            Tabela = "Usuarios";
+        }
+
+        protected override void SetNomeDoCampoId()
+        {
+            NomeDoCampoId = "usuarioId";
         }
     }
 }

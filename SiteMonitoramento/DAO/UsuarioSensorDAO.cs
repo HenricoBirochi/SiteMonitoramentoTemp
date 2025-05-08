@@ -6,9 +6,9 @@ using System;
 
 namespace SiteMonitoramento.DAO
 {
-    public class UsuarioSensorDAO
+    public class UsuarioSensorDAO : PadraoDAO<UsuarioSensor>
     {
-        private SqlParameter[] CriaParametros(UsuarioSensor usuarioSensor)
+        protected override SqlParameter[] CriaParametros(UsuarioSensor usuarioSensor)
         {
             SqlParameter[] parametros = new SqlParameter[3];
             parametros[0] = new SqlParameter("usuarioSensorId", usuarioSensor.UsuarioSensorId);
@@ -16,7 +16,7 @@ namespace SiteMonitoramento.DAO
             parametros[2] = new SqlParameter("sensorId", usuarioSensor.SensorId);
             return parametros;
         }
-        private UsuarioSensor MontaUsuarioSensor(DataRow registro)
+        protected override UsuarioSensor MontaModel(DataRow registro)
         {
             UsuarioSensor uS = new UsuarioSensor();
             uS.UsuarioSensorId = Convert.ToInt32(registro["usuarioSensorId"]);
@@ -24,60 +24,15 @@ namespace SiteMonitoramento.DAO
             uS.SensorId = Convert.ToInt32(registro["sensorId"]);
             return uS;
         }
-
-        public void Inserir(UsuarioSensor usuarioSensor)
+        protected override void SetTabela()
         {
-            string sql = "spInserirUsuarioSensor";
-            HelperDAO.ExecutaProc(sql, CriaParametros(usuarioSensor));
+            Tabela = "UsuarioSensores";
         }
 
-        public void Alterar(UsuarioSensor usuarioSensor)
+        protected override void SetNomeDoCampoId()
         {
-            string sql = "spAlterarUsuarioSensor";
-            HelperDAO.ExecutaProc(sql, CriaParametros(usuarioSensor));
+            NomeDoCampoId = "usuarioSensorId";
         }
-
-        public void Excluir(int id)
-        {
-            string sql = "spExcluirUsuarioSensor";
-            SqlParameter[] parametros = { new SqlParameter("@usuarioSensorId", id) };
-            HelperDAO.ExecutaProc(sql, parametros);
-        }
-
-        public UsuarioSensor Consulta(int id)
-        {
-            string sql = "spConsultarUsuarioSensor";
-            SqlParameter[] parametros = { new SqlParameter("@usuarioSensorId", id) };
-            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, parametros);
-            if (tabela.Rows.Count == 0)
-                return null;
-            else
-                return MontaUsuarioSensor(tabela.Rows[0]);
-        }
-
-        public List<UsuarioSensor> Listagem()
-        {
-            List<UsuarioSensor> lista = new List<UsuarioSensor>();
-            string sql = "spListarUsuarioSensores";
-            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, null);
-            foreach (DataRow registro in tabela.Rows)
-                lista.Add(MontaUsuarioSensor(registro));
-            return lista;
-        }
-
-        public int ProximoId()
-        {
-            string sql = "spProximoId";
-            SqlParameter[] parametros =
-            {
-                new SqlParameter("@tabela", "UsuarioSensores"),
-                new SqlParameter("@nomeDoCampoId", "usuarioSensorId")
-            };
-            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, parametros);
-            return Convert.ToInt32(tabela.Rows[0]["MAIOR"]);
-        }
-
-
 
         //metodos importantes abaixo, um vai trazer o object DTO(Data Transfer Object) para usa-lo no outro metodo que
         public UsuarioSensorDTO MontaUsuarioSensorDTO(DataRow registro)

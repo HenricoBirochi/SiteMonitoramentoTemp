@@ -6,7 +6,7 @@ namespace SiteMonitoramento.DAO
     {
         public static SqlConnection GetConexao()
         {
-            string strCon = "Data Source=LOCALHOST;Initial Catalog=HephaiTech;User Id=sa;Password=Password123!;TrustServerCertificate=True;";
+            string strCon = "Data Source=LOCALHOST;Initial Catalog=HephaiTech;User Id=sa;Password=123456;TrustServerCertificate=True;";
             SqlConnection conexao = new SqlConnection(strCon);
             conexao.Open();
             return conexao;

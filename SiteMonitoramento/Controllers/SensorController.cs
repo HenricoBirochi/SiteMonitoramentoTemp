@@ -82,7 +82,7 @@ namespace SiteMonitoramento.Controllers
         public IActionResult DeletarSensor(int SensorId)
         {
             SensorDAO dao = new SensorDAO();
-            dao.Excluir(SensorId);
+            dao.Delete(SensorId);
 
             var sensores = dao.ListagemSensoresTipoSensoresJoin();
             return View("ListaSensores", sensores);
