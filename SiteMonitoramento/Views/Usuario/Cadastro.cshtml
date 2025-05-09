@@ -2,8 +2,16 @@
 
 <div class="d-flex justify-content-center align-items-center">
     <div class="card p-4" style="max-width: 400px; width: 100%;">
-        <h2 class="card-title text-center mb-4">Cadastrar Usuário</h2>
-        <form asp-action="Salvar" method="post">
+        @if(ViewBag.Operacao == "I")
+        {
+            <h2 class="card-title text-center mb-4">Cadastrar Usuário</h2>
+        }
+        else
+        {
+            <h2 class="card-title text-center mb-4">Alterar Usuário</h2>
+        }
+        <form asp-action="Salvar" method="post" enctype="multipart/form-data">
+            <input name="operacao" value="@ViewBag.Operacao" hidden>
             <div class="mb-3">
                 <input asp-for="UsuarioId" class="form-control" hidden>
             </div>
@@ -27,9 +35,24 @@
                 <input asp-for="CPF" class="form-control" placeholder="Digite seu CPF" required>
                 <span asp-validation-for="CPF" class="text-danger"></span>
             </div>
+            <div class="mb-3">
+                <input type="file" name="Imagem" id="Imagem" onchange="exibirImagem()" class="btn btn-secondary">
+                <img id="imgPreview" src="data:image/jpeg;base64,@Model.ImagemEmBase64" class="img-responsive" width="100">
+                <span asp-validation-for="Imagem"></span>
+            </div>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary">Criar usuário</button>
             </div>
         </form>
     </div>
 </div>
+
+<script>
+    function exibirImagem() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("Imagem").files[0]);
+        oFReader.onload = function (oFREvent) {
+        document.getElementById("imgPreview").src = oFREvent.target.result;
+        };
+    }
+</script>

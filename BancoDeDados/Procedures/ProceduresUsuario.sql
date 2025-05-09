@@ -14,11 +14,12 @@ CREATE PROCEDURE spInserirUsuarios
     @usuarioNome NVARCHAR(100),
     @senha NVARCHAR(100),
     @email NVARCHAR(100),
-    @cpf VARCHAR(20)
+    @cpf VARCHAR(20),
+	@imagem VARBINARY(max)
 AS
 BEGIN
-    INSERT INTO Usuarios (usuarioId, usuarioNome, senha, email, cpf)
-    VALUES (@usuarioId, @usuarioNome, @senha, @email, @cpf)
+    INSERT INTO Usuarios (usuarioId, usuarioNome, senha, email, cpf, imagem)
+    VALUES (@usuarioId, @usuarioNome, @senha, @email, @cpf, @imagem)
 END
 GO
 
@@ -32,14 +33,16 @@ CREATE PROCEDURE spAlterarUsuarios
     @usuarioNome NVARCHAR(100),
     @senha NVARCHAR(100),
     @email NVARCHAR(100),
-    @cpf VARCHAR(20)
+    @cpf VARCHAR(20),
+	@imagem VARBINARY(max)
 AS
 BEGIN
     UPDATE Usuarios
     SET usuarioNome = @usuarioNome,
         senha = @senha,
         email = @email,
-        cpf = @cpf
+        cpf = @cpf,
+		imagem = @imagem
     WHERE usuarioId = @usuarioId
 END
 GO

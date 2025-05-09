@@ -9,7 +9,7 @@ namespace SiteMonitoramento.Controllers
     public class PadraoController<T> : Controller
     {
         protected PadraoDAO<T> DAO { get; set; }
-        protected bool GeraProximoId { get; set; }
+        public bool GeraProximoId { get; set; }
         protected string NomeViewIndex { get; set; } = "index";
         protected string NomeViewForm { get; set; } = "form";
         protected bool ExigeAutenticacao { get; set; } = true;

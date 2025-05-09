@@ -18,7 +18,8 @@ CREATE TABLE Usuarios(
 	usuarioNome VARCHAR(40),                                         -- Nome do usuário
 	senha VARCHAR(40),                                               -- Senha de acesso
 	email VARCHAR(100),                                              -- Email do usuário
-	cpf VARCHAR(30)                                                  -- CPF do usuário
+	cpf VARCHAR(30),                                                 -- CPF do usuário
+	imagem varbinary(max)										     -- Imagem do usuário
 )
 
 -- ========================================
