@@ -36,17 +36,6 @@ namespace SiteMonitoramento.DAO
                 u.ImagemEmByte = registro["imagem"] as byte[];
             return u;
         }
-        public int ProximoId()
-        {
-            string sql = "spProximoId";
-            SqlParameter[] parametros =
-            {
-                new SqlParameter("@tabela", "Usuarios"),
-                new SqlParameter("@nomeDoCampoId", "usuarioId")
-            };
-            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, parametros);
-            return Convert.ToInt32(tabela.Rows[0]["MAIOR"]);
-        }
 
         protected override void SetTabela()
         {

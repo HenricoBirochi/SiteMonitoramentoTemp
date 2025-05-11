@@ -19,7 +19,7 @@
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <div class="logo">
                         <div class="logo-image">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-axe-icon lucide-axe"><path d="m14 12-8.5 8.5a2.12 2.12 0 1 1-3-3L11 9"/><path d="M15 13 9 7l4-4 6 6h3a8 8 0 0 1-7 7z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-axe-icon lucide-axe"><path d="m14 12-8.5 8.5a2.12 2.12 0 1 1-3-3L11 9" /><path d="M15 13 9 7l4-4 6 6h3a8 8 0 0 1-7 7z" /></svg>
                         </div>
                         <span class="tituloSite">HephaiTech</span>
                     </div>
@@ -49,9 +49,25 @@
                             </li>
                             <li class="nav-item">
                                 <a class="" asp-area="" asp-controller="Usuario" asp-action="Login">Entrar</a>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in-icon lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in-icon lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" /><polyline points="10 17 15 12 10 7" /><line x1="15" x2="3" y1="12" y2="12" /></svg>
                             </li>
                         </ul>
+                    </div>
+                    <div class="nav-account">
+                        @{
+                            int id = Convert.ToInt32(Context.Session.GetString("Id"));
+                            UsuarioDAO dao = new UsuarioDAO();
+                            Usuario user = dao.Consulta(id);
+                            if (Context.Session.GetString("Id") != null)
+                            {
+                                <a href="/Usuario/LogOff">Sair</a>
+                                <a href="#"><img src="data:image/jpeg;base64,@user.ImagemEmBase64" class="img-responsive" width="30"></a>
+                            }
+                            else
+                            {
+                                <a href="/Usuario/Login"><img src="~/img/Usuario/UsuarioDeslogado.png" width="30"></a>
+                            }
+                        }
                     </div>
                 </div>
             </div>

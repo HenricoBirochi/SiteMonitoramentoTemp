@@ -127,7 +127,7 @@ namespace SiteMonitoramento.Controllers
             {
                 if (email == usuario.Email && senha == usuario.Senha)
                 {
-                    HttpContext.Session.SetString("Logado", "true");
+                    HttpContext.Session.SetString("Id", usuario.UsuarioId.ToString());
                     return RedirectToAction("index", "Home");
                 }
             }

@@ -25,8 +25,11 @@ namespace SiteMonitoramento
         {
             services.AddControllersWithViews();
 
+            services.AddDistributedMemoryCache(); //Serve para liberar memória RAM para guardar as informações da session
+
             services.AddSession(options =>
             {
+                options.Cookie.HttpOnly = true; // Esse comando faz com que só seja possível acessar o cookie através de requisições HTTP
                 options.Cookie.IsEssential = true; // GDPR mais detalhes em https://andrewlock.net/session-state-gdpr-and-non-essential-cookies/
                 options.IdleTimeout = TimeSpan.FromSeconds(900);
             });

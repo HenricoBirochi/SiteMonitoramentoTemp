@@ -8,7 +8,7 @@ namespace SiteMonitoramento.Controllers
     {
         public static Boolean VerificaUserLogado(ISession session)
         {
-            string logado = session.GetString("Logado");
+            string logado = session.GetString("Id");
             if (logado == null)
                 return false;
             else
