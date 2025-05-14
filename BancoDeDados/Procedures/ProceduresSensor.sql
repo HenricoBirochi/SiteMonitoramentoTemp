@@ -47,7 +47,7 @@ CREATE PROCEDURE spListarSensoresTipoSensoresJoin
 AS
 BEGIN
     SELECT 
-        sensorId, sensorNome, nomeTecnico
+        s.sensorId, s.sensorNome, ts.nomeTecnico
     FROM Sensores s
     INNER JOIN TipoSensores ts ON ts.tipoSensorId = s.tipoSensorId
 END

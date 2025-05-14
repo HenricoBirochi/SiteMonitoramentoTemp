@@ -60,7 +60,24 @@ namespace SiteMonitoramento.Controllers
                     dao.Alterar(usuario);
                     return RedirectToAction("Index", "Home");
                 }
-                return RedirectToAction("Index", "Home");
+                if(operacao == "I")
+                    return RedirectToAction("Cadastro", usuario);
+                return RedirectToAction("Editar", usuario);
+            }
+            catch (Exception erro)
+            {
+                return View("Error", new ErrorViewModel(erro.ToString()));
+            }
+        }
+
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                UsuarioDAO dao = new UsuarioDAO();
+                dao.Delete(id);
+                HttpContext.Session.Clear();
+                return RedirectToAction("Cadastro");
             }
             catch (Exception erro)
             {
@@ -90,7 +107,7 @@ namespace SiteMonitoramento.Controllers
             UsuarioDAO dao = new UsuarioDAO();
             if (string.IsNullOrEmpty(usuario.UsuarioNome))
                 ModelState.AddModelError("UsuarioNome", "Preencha o nome do usuário.");
-            if (string.IsNullOrEmpty(usuario.Senha) && usuario.Senha.Length < 8)
+            if (string.IsNullOrEmpty(usuario.Senha) || usuario.Senha.Length < 8)
                 ModelState.AddModelError("Senha", "Preencha a senha corretamente.");
             if (string.IsNullOrEmpty(usuario.Email))
                 ModelState.AddModelError("Email", "Preencha o email corretamente.");
@@ -116,6 +133,8 @@ namespace SiteMonitoramento.Controllers
                     usuario.ImagemEmByte = ConvertImageToByte(usuario.Imagem);
                 }
             }
+
+            //Valida dados de email e senha
         }
 
         //Login e LogOff

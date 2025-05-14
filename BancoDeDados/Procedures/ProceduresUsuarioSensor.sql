@@ -48,7 +48,7 @@ AS
 BEGIN
     SELECT 
         us.usuarioSensorId, us.usuarioId, us.sensorId,
-        u.usuarioNome, u.email, u.cpf,
+        u.usuarioNome, u.email, u.cpf, u.imagem,
         s.sensorNome, s.tipoSensorId
     FROM UsuarioSensores us
     INNER JOIN Usuarios u ON us.usuarioId = u.usuarioId

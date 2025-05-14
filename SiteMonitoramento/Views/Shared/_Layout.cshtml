@@ -61,11 +61,11 @@
                             if (Context.Session.GetString("Id") != null)
                             {
                                 <a href="/Usuario/LogOff">Sair</a>
-                                <a href="#"><img src="data:image/jpeg;base64,@user.ImagemEmBase64" class="img-responsive" width="30"></a>
+                                <a href="/Usuario/Editar?id=@user.UsuarioId"><img src="data:image/jpeg;base64,@user.ImagemEmBase64" width="30" class="img-responsive user"></a>
                             }
                             else
                             {
-                                <a href="/Usuario/Login"><img src="~/img/Usuario/UsuarioDeslogado.png" width="30"></a>
+                                <a href="/Usuario/Login"><img src="~/img/Usuario/UsuarioDeslogado.png" width="30" height="30" class="user"></a>
                             }
                         }
                     </div>

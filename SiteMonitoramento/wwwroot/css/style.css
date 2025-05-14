@@ -132,3 +132,8 @@ body {
     white-space: nowrap;
     line-height: 60px; /* Vertically center the text there */
 }
+
+/*Mudando o jeito que a foto do usuário aparece*/
+.user{
+    border-radius: 30px;
+}

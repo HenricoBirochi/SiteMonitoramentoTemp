@@ -40,9 +40,23 @@
                 <img id="imgPreview" src="data:image/jpeg;base64,@Model.ImagemEmBase64" class="img-responsive" width="100">
                 <span asp-validation-for="Imagem"></span>
             </div>
-            <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary">Criar usuário</button>
-            </div>
+            @{
+                if(ViewBag.Operacao == "I")
+                {
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Criar usuário</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-grid gap-2">
+                        <a href="/Usuario/Delete?id=@Model.UsuarioId" onclick="return confirm('Tem certeza que deseja excluir este Sensor?');" class="btn btn-danger">Deletar usuário</a>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Alterar usuário</button>
+                    </div>
+                }
+            }
         </form>
     </div>
 </div>
