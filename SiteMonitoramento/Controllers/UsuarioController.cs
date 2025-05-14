@@ -21,7 +21,7 @@ namespace SiteMonitoramento.Controllers
                 Usuario usuario = new Usuario();
                 UsuarioDAO dao = new UsuarioDAO();
                 usuario.UsuarioId = dao.ProximoId();
-                return View("Cadastro", usuario);
+                return View(usuario);
             }
             catch (Exception erro)
             {
@@ -60,9 +60,13 @@ namespace SiteMonitoramento.Controllers
                     dao.Alterar(usuario);
                     return RedirectToAction("Index", "Home");
                 }
-                if(operacao == "I")
-                    return RedirectToAction("Cadastro", usuario);
-                return RedirectToAction("Editar", usuario);
+                if (operacao == "I")
+                {
+                    ViewBag.Operacao = "I";
+                    return View("Cadastro", usuario);
+                }
+                ViewBag.Operacao = "A";
+                return View("Cadastro", usuario);
             }
             catch (Exception erro)
             {
@@ -105,10 +109,26 @@ namespace SiteMonitoramento.Controllers
         {
             ModelState.Clear(); // limpa os erros criados automaticamente pelo Asp.net (que podem estar com msg em inglês)
             UsuarioDAO dao = new UsuarioDAO();
+
+            //Verificando se já existe algum usuário com esse email, Nome e CPF
+            var usuarios = dao.Listagem();
+            Usuario usuarioExistente = usuarios.Find(u => u.Email == usuario.Email);
+            if (usuarioExistente != null && usuarioExistente.UsuarioId != usuario.UsuarioId)
+                ModelState.AddModelError("Email", "Esse email já está cadastrado");
+            usuarioExistente = usuarios.Find(u => u.UsuarioNome == usuario.UsuarioNome);
+            if (usuarioExistente != null && usuarioExistente.UsuarioId != usuario.UsuarioId)
+                ModelState.AddModelError("UsuarioNome", "Esse nome de usuário já existe");
+            usuarioExistente = usuarios.Find(u => u.CPF == usuario.CPF);
+            if (usuarioExistente != null && usuarioExistente.UsuarioId != usuario.UsuarioId)
+                ModelState.AddModelError("CPF", "Esse CPF já existe");
+
+            //Verificando se a senha tem pelo menos 8 caracteres e se ela não é nula
+            if (string.IsNullOrEmpty(usuario.Senha) || usuario.Senha.Length < 8)
+                ModelState.AddModelError("Senha", "Coloque pelo menos 8 caracteres na senha.");
+
+            //Verificando se os campos estão vazios
             if (string.IsNullOrEmpty(usuario.UsuarioNome))
                 ModelState.AddModelError("UsuarioNome", "Preencha o nome do usuário.");
-            if (string.IsNullOrEmpty(usuario.Senha) || usuario.Senha.Length < 8)
-                ModelState.AddModelError("Senha", "Preencha a senha corretamente.");
             if (string.IsNullOrEmpty(usuario.Email))
                 ModelState.AddModelError("Email", "Preencha o email corretamente.");
             if (string.IsNullOrEmpty(usuario.CPF))
