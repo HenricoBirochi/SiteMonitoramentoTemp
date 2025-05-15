@@ -25,7 +25,7 @@
                     </div>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -55,17 +55,15 @@
                     </div>
                     <div class="nav-account">
                         @{
-                            int id = Convert.ToInt32(Context.Session.GetString("Id"));
-                            UsuarioDAO dao = new UsuarioDAO();
-                            Usuario user = dao.Consulta(id);
-                            if (Context.Session.GetString("Id") != null)
+                            if (ViewBag.Usuario == null)
                             {
-                                <a href="/Usuario/LogOff">Sair</a>
-                                <a href="/Usuario/Editar?id=@user.UsuarioId"><img src="data:image/jpeg;base64,@user.ImagemEmBase64" width="30" class="img-responsive user"></a>
+                                <a href="/Usuario/Login"><img src="~/img/Usuario/UsuarioDeslogado.png" width="30" height="30" class="user"></a>
                             }
                             else
                             {
-                                <a href="/Usuario/Login"><img src="~/img/Usuario/UsuarioDeslogado.png" width="30" height="30" class="user"></a>
+                                Usuario user = ViewBag.Usuario;
+                                <a href="/Usuario/LogOff">Sair</a>
+                                <a href="/Usuario/Editar?id=@user.UsuarioId"><img src="data:image/jpeg;base64,@user.ImagemEmBase64" width="30" class="img-responsive user"></a>
                             }
                         }
                     </div>

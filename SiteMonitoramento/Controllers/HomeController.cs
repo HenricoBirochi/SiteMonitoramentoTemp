@@ -9,7 +9,7 @@ using SiteMonitoramento.Models;
 
 namespace SiteMonitoramento.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : PadraoController
     {
         public IActionResult Index()
         {

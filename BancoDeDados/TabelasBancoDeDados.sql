@@ -43,6 +43,18 @@ CREATE TABLE Sensores(
 )
 
 -- ========================================
+-- CRIA A TABELA DE MEDIDAS
+-- ========================================
+CREATE TABLE Medidas(
+	medidaId INT PRIMARY KEY,
+	valorMedido DECIMAL(18,2),
+	horarioMedicao DATETIME,
+	sensorId INT,
+
+	FOREIGN KEY (sensorId) REFERENCES Sensores(sensorId)
+)
+
+-- ========================================
 -- CRIA A TABELA DE USUÁRIOS COM SEUS SENSORES
 -- ========================================
 CREATE TABLE UsuarioSensores(

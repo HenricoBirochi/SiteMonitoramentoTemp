@@ -4,6 +4,7 @@ using SiteMonitoramento.DAO;
 using SiteMonitoramento.Models;
 using System;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace SiteMonitoramento.Controllers
 {
@@ -122,9 +123,13 @@ namespace SiteMonitoramento.Controllers
             if (usuarioExistente != null && usuarioExistente.UsuarioId != usuario.UsuarioId)
                 ModelState.AddModelError("CPF", "Esse CPF já existe");
 
-            //Verificando se a senha tem pelo menos 8 caracteres e se ela não é nula
+            //Verificando se a senha tem pelo menos 8 caracteres, se ela não é nula, se ela tem um caracter especial e se ela tem uma letara maiúscula
             if (string.IsNullOrEmpty(usuario.Senha) || usuario.Senha.Length < 8)
                 ModelState.AddModelError("Senha", "Coloque pelo menos 8 caracteres na senha.");
+            if (!Regex.IsMatch(usuario.Senha, "[A-Z]"))
+                ModelState.AddModelError("Senha", "A senha deve conter pelo menos uma letra maiúscula.");
+            if (!Regex.IsMatch(usuario.Senha, "[^a-zA-Z0-9]"))
+                ModelState.AddModelError("Senha", "A senha deve conter pelo menos um caractere especial.");
 
             //Verificando se os campos estão vazios
             if (string.IsNullOrEmpty(usuario.UsuarioNome))
@@ -153,8 +158,6 @@ namespace SiteMonitoramento.Controllers
                     usuario.ImagemEmByte = ConvertImageToByte(usuario.Imagem);
                 }
             }
-
-            //Valida dados de email e senha
         }
 
         //Login e LogOff

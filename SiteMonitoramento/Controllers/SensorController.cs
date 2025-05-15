@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace SiteMonitoramento.Controllers
 {
-    public class SensorController : PadraoController<Sensor>
+    public class SensorController : PadraoCrudeController<Sensor>
     {
         public SensorController()
         {
