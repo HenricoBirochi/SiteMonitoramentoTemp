@@ -13,11 +13,12 @@ CREATE PROCEDURE spInserirMedidas
     @medidaId INT,
     @valorMedido DECIMAL(18,2),
     @horarioMedicao DATETIME,
+	@parametro varchar(20),
     @sensorId INT
 AS
 BEGIN
-    INSERT INTO Medidas(medidaId, valorMedido, horarioMedicao, sensorId)
-    VALUES (@medidaId, @valorMedido, @horarioMedicao, @sensorId)
+    INSERT INTO Medidas(medidaId, valorMedido, horarioMedicao, parametro, sensorId)
+    VALUES (@medidaId, @valorMedido, @horarioMedicao, @parametro, @sensorId)
 END
 GO
 
@@ -30,12 +31,14 @@ CREATE PROCEDURE spAlterarMedidas
 	@medidaId INT,
     @valorMedido DECIMAL(18,2),
     @horarioMedicao DATETIME,
+	@parametro varchar(20),
     @sensorId INT
 AS
 BEGIN
     UPDATE Medidas
     SET valorMedido = @valorMedido,
         horarioMedicao = @horarioMedicao,
+		parametro = @parametro,
         sensorId = @sensorId
     WHERE medidaId = @medidaId
 END

@@ -43,12 +43,24 @@ CREATE TABLE Sensores(
 )
 
 -- ========================================
+-- CRIA A TABELA DE Ambientes
+-- ========================================
+CREATE TABLE Ambientes(
+	ambienteId INT PRIMARY KEY,										 -- Identificador único de ambiente
+	ambienteNome varchar(40),										 -- Nome do ambiente
+	sensorId int,													 -- sensor que pertence ao ambiente (chave estrangeira)
+
+	FOREIGN KEY (sensorId) REFERENCES Sensores(sensorId)
+)
+
+-- ========================================
 -- CRIA A TABELA DE MEDIDAS
 -- ========================================
 CREATE TABLE Medidas(
 	medidaId INT PRIMARY KEY,
 	valorMedido DECIMAL(18,2),
 	horarioMedicao DATETIME,
+	parametro varchar(20),
 	sensorId INT,
 
 	FOREIGN KEY (sensorId) REFERENCES Sensores(sensorId)
@@ -57,11 +69,11 @@ CREATE TABLE Medidas(
 -- ========================================
 -- CRIA A TABELA DE USUÁRIOS COM SEUS SENSORES
 -- ========================================
-CREATE TABLE UsuarioSensores(
-	usuarioSensorId INT PRIMARY KEY,                                 -- Identificador único da relação
+CREATE TABLE UsuarioAmbiente(
+	usuarioAmbienteId INT PRIMARY KEY,                               -- Identificador único da relação
 	usuarioId INT,                                                   -- ID do usuário (chave estrangeira)
-	sensorId INT,                                                    -- ID do sensor (chave estrangeira)
+	ambienteId INT,                                                  -- ID do ambiente (chave estrangeira)
 
 	FOREIGN KEY (usuarioId) REFERENCES Usuarios(usuarioId),          -- Relacionamento com Usuarios
-	FOREIGN KEY (sensorId) REFERENCES Sensores(sensorId)             -- Relacionamento com Sensores
+	FOREIGN KEY (ambienteId) REFERENCES Ambientes(ambienteId)        -- Relacionamento com Ambientes
 )
