@@ -8,8 +8,12 @@ using System.Text.RegularExpressions;
 
 namespace SiteMonitoramento.Controllers
 {
-    public class UsuarioController : Controller
+    public class UsuarioController : PadraoController
     {
+        public UsuarioController()
+        {
+            ExigeAutenticacao = false;
+        }
         public IActionResult Login()
         {
             return View();

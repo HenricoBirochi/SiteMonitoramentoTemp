@@ -11,6 +11,10 @@ namespace SiteMonitoramento.Controllers
 {
     public class HomeController : PadraoController
     {
+        public HomeController()
+        {
+            ExigeAutenticacao = false;
+        }
         public IActionResult Index()
         {
             return View();

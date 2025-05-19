@@ -134,6 +134,12 @@ body {
 }
 
 /*Mudando o jeito que a foto do usuário aparece*/
-.user{
+.user {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 4px;
     border-radius: 30px;
+    width: 30px;
+    height: 30px;
 }
