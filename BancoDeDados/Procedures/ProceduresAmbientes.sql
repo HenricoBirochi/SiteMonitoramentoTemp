@@ -11,12 +11,11 @@ GO
 -- ========================================
 CREATE PROCEDURE spInserirAmbientes
     @ambienteId INT,
-    @ambienteNome NVARCHAR(40),
-    @sensorId INT
+    @ambienteNome NVARCHAR(40)
 AS
 BEGIN
-    INSERT INTO Ambientes (ambienteId, ambienteNome, sensorId)
-    VALUES (@ambienteId, @ambienteNome, @sensorId)
+    INSERT INTO Ambientes (ambienteId, ambienteNome)
+    VALUES (@ambienteId, @ambienteNome)
 END
 GO
 
@@ -27,13 +26,11 @@ GO
 -- ========================================
 CREATE PROCEDURE spAlterarAmbientes
     @ambienteId INT,
-    @ambienteNome NVARCHAR(40),
-    @sensorId INT
+    @ambienteNome NVARCHAR(40)
 AS
 BEGIN
     UPDATE Ambientes
-    SET ambienteNome = @ambienteNome,
-        sensorId = @sensorId
+    SET ambienteNome = @ambienteNome
     WHERE ambienteId = @ambienteId
 END
 GO
@@ -44,12 +41,13 @@ GO
 -- Sem parâmetros
 -- ========================================
 CREATE PROCEDURE spListarAmbienteSensorTipoSensorJoin
+	@ambienteId INT
 AS
 BEGIN
     SELECT 
-        a.ambienteNome, s.sensorNome, ts.nomeTecnico, ts.parametroMedido
-    FROM Ambientes a
-    INNER JOIN Sensores s ON a.ambienteId = a.ambienteId
+        s.sensorNome, ts.nomeTecnico, ts.parametroMedido
+    FROM Sensores s
 	INNER JOIN TipoSensores ts ON s.tipoSensorId = ts.tipoSensorId
+	where s.ambienteId = @ambienteId
 END
 GO

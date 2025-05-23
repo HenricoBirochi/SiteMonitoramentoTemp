@@ -42,6 +42,7 @@ namespace SiteMonitoramento.Controllers
         {
             try
             {
+                
                 ValidaDados(model, Operacao);
                 if (ModelState.IsValid == false)
                 {

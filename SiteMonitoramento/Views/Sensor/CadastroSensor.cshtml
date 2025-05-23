@@ -19,6 +19,10 @@
                 <label for="TipoSensorId" class="form-label">Tipo do Sensor</label>
                 <select asp-for="TipoSensorId" asp-items="ViewBag.TipoSensores" class="form-control" required></select>
             </div>
+            <div class="mb-3">
+                <label for="AmbienteId" class="form-label">Ambiente</label>
+                <select asp-for="AmbienteId" asp-items="ViewBag.Ambientes" class="form-control" required></select>
+            </div>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary">Salvar Sensor</button>
             </div>

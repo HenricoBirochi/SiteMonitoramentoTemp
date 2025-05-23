@@ -1,0 +1,23 @@
+﻿@model Ambiente
+
+<div class="d-flex justify-content-center align-items-center">
+    <div class="card p-4" style="max-width: 400px; width: 100%;">
+        <h2 class="card-title text-center mb-4">Salvar dados do Ambiente</h2>
+        <form asp-action="Save" method="post">
+            <div>
+                <input type="hidden" name="Operacao" value="@ViewBag.Operacao">
+            </div>
+            <div class="mb-3">
+                <input asp-for="AmbienteId" class="form-control" hidden>
+            </div>
+            <div class="mb-3">
+                <label for="AmbienteNome" class="form-label">Nome do Ambiente</label>
+                <input asp-for="AmbienteNome" class="form-control" placeholder="Digite o nome do ambiente" required>
+                <span asp-validation-for="AmbienteNome" class="text-danger"></span>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Salvar Ambiente</button>
+            </div>
+        </form>
+    </div>
+</div>

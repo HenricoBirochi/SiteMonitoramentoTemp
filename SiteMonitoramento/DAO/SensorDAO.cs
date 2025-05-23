@@ -11,10 +11,11 @@ namespace SiteMonitoramento.DAO
     {
         protected override SqlParameter[] CriaParametros(Sensor sensor)
         {
-            SqlParameter[] parametros = new SqlParameter[3];
+            SqlParameter[] parametros = new SqlParameter[4];
             parametros[0] = new SqlParameter("sensorId", sensor.SensorId);
             parametros[1] = new SqlParameter("sensorNome", sensor.SensorNome);
             parametros[2] = new SqlParameter("tipoSensorId", sensor.TipoSensorId);
+            parametros[3] = new SqlParameter("ambienteId", sensor.AmbienteId);
             return parametros;
         }
         protected override Sensor MontaModel(DataRow registro)
@@ -23,6 +24,7 @@ namespace SiteMonitoramento.DAO
             s.SensorId = Convert.ToInt32(registro["sensorId"]);
             s.SensorNome = registro["sensorNome"].ToString();
             s.TipoSensorId = Convert.ToInt32(registro["tipoSensorId"]);
+            s.AmbienteId = Convert.ToInt32(registro["ambienteId"]);
             return s;
         }
         protected override void SetTabela()

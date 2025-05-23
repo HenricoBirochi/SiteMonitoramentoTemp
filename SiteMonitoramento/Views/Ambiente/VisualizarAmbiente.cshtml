@@ -1,0 +1,14 @@
+﻿@model List<SensoresAmbienteViewModel>
+
+<div>
+    @foreach (var sensor in Model)
+    {
+        <div>
+            <ul>
+                <li>@sensor.SensorNome</li>
+                <li>@sensor.NomeTecnico</li>
+                <li>@sensor.ParametroMedido</li>
+            </ul>
+        </div>
+    }
+</div>

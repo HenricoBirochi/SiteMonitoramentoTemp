@@ -1,6 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using SiteMonitoramento.Models;
+using SiteMonitoramento.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace SiteMonitoramento.DAO
@@ -9,10 +11,9 @@ namespace SiteMonitoramento.DAO
     {
         protected override SqlParameter[] CriaParametros(Ambiente model)
         {
-            SqlParameter[] parametros = new SqlParameter[3];
+            SqlParameter[] parametros = new SqlParameter[2];
             parametros[0] = new SqlParameter("ambienteId", model.AmbienteId);
             parametros[1] = new SqlParameter("ambienteNome", model.AmbienteNome);
-            parametros[2] = new SqlParameter("sensorId", model.SensorId);
             return parametros;
         }
 
@@ -21,7 +22,6 @@ namespace SiteMonitoramento.DAO
             Ambiente a = new Ambiente();
             a.AmbienteId = Convert.ToInt32(registro["ambienteId"]);
             a.AmbienteNome = registro["ambienteNome"].ToString();
-            a.SensorId = Convert.ToInt32(registro["sensorId"]);
             return a;
         }
 
@@ -33,6 +33,29 @@ namespace SiteMonitoramento.DAO
         protected override void SetTabela()
         {
             Tabela = "Ambientes";
+        }
+
+        //Lista os sensores que são de um ambiente específico
+        private SensoresAmbienteViewModel MontaSensores(DataRow registro)
+        {
+            SensoresAmbienteViewModel sa = new SensoresAmbienteViewModel();
+            sa.SensorNome = registro["sensorNome"].ToString();
+            sa.NomeTecnico = registro["nomeTecnico"].ToString();
+            sa.ParametroMedido = registro["parametroMedido"].ToString();
+            return sa;
+        }
+        public List<SensoresAmbienteViewModel> ListagemAmbienteSensoresTipoSensoresJoin(int ambienteId)
+        {
+            var lista = new List<SensoresAmbienteViewModel>();
+            var parametros = new SqlParameter[]
+            {
+                new SqlParameter("ambienteId", ambienteId),
+            };
+            string sql = "spListarAmbienteSensorTipoSensorJoin";
+            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, parametros);
+            foreach (DataRow registro in tabela.Rows)
+                lista.Add(MontaSensores(registro));
+            return lista;
         }
     }
 }

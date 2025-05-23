@@ -12,11 +12,12 @@ GO
 CREATE PROCEDURE spInserirSensores
     @sensorId INT,
     @sensorNome NVARCHAR(100),
-    @tipoSensorId INT
+    @tipoSensorId INT,
+	@ambienteId INT
 AS
 BEGIN
-    INSERT INTO Sensores (sensorId, sensorNome, tipoSensorId)
-    VALUES (@sensorId, @sensorNome, @tipoSensorId)
+    INSERT INTO Sensores (sensorId, sensorNome, tipoSensorId, ambienteId)
+    VALUES (@sensorId, @sensorNome, @tipoSensorId, @ambienteId)
 END
 GO
 
@@ -28,12 +29,14 @@ GO
 CREATE PROCEDURE spAlterarSensores
     @sensorId INT,
     @sensorNome NVARCHAR(100),
-    @tipoSensorId INT
+    @tipoSensorId INT,
+	@ambienteId INT
 AS
 BEGIN
     UPDATE Sensores
     SET sensorNome = @sensorNome,
-        tipoSensorId = @tipoSensorId
+        tipoSensorId = @tipoSensorId,
+		ambienteId = @ambienteId
     WHERE sensorId = @sensorId
 END
 GO

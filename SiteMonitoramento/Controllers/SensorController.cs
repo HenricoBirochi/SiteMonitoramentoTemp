@@ -28,6 +28,7 @@ namespace SiteMonitoramento.Controllers
         {
             if (GeraProximoId && Operacao == "I")
                 model.SensorId = DAO.ProximoId();
+            PreparaListaAmbientesParaCombo();
             PreparaListaTipoSensoresParaCombo();
         }
         public override IActionResult Save(Sensor sensor, string Operacao)
@@ -50,7 +51,7 @@ namespace SiteMonitoramento.Controllers
                 }
                 else
                 {
-                    PreparaListaTipoSensoresParaCombo();
+                    PreencheDadosParaView(Operacao, sensor);
                     ViewBag.Operacao = Operacao;
                     return View("CadastroSensor", sensor);
                 }
@@ -63,7 +64,6 @@ namespace SiteMonitoramento.Controllers
         protected override void ValidaDados(Sensor model, string operacao)
         {
             ModelState.Clear(); // limpa os erros criados automaticamente pelo Asp.net (que podem estar com msg em inglês)
-            SensorDAO dao = new SensorDAO();
             if (operacao == "I" && DAO.Consulta(model.SensorId) != null)
                 ModelState.AddModelError("Id", "Código já está em uso!");
             if (operacao == "A" && DAO.Consulta(model.SensorId) == null)
@@ -86,6 +86,20 @@ namespace SiteMonitoramento.Controllers
                 listaTiposDeSensores.Add(item);
             }
             ViewBag.TipoSensores = listaTiposDeSensores;
+        }
+        private void PreparaListaAmbientesParaCombo()
+        {
+            AmbienteDAO dao = new AmbienteDAO();
+            var ambientes = dao.Listagem();
+            List<SelectListItem> listaAmbientes = new List<SelectListItem>();
+
+            listaAmbientes.Add(new SelectListItem("Selecione o Ambiente...", "0"));
+            foreach (var ambiente in ambientes)
+            {
+                SelectListItem item = new SelectListItem(ambiente.AmbienteNome, ambiente.AmbienteId.ToString());
+                listaAmbientes.Add(item);
+            }
+            ViewBag.Ambientes = listaAmbientes;
         }
     }
 }

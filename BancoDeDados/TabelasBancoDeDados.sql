@@ -23,6 +23,26 @@ CREATE TABLE Usuarios(
 )
 
 -- ========================================
+-- CRIA A TABELA DE Ambientes
+-- ========================================
+CREATE TABLE Ambientes(
+	ambienteId INT PRIMARY KEY,										 -- Identificador único de ambiente
+	ambienteNome varchar(40)										 -- Nome do ambiente
+)
+
+-- ========================================
+-- CRIA A TABELA DE USUÁRIOS COM SEUS SENSORES
+-- ========================================
+CREATE TABLE UsuarioAmbiente(
+	usuarioAmbienteId INT PRIMARY KEY,                               -- Identificador único da relação
+	usuarioId INT,                                                   -- ID do usuário (chave estrangeira)
+	ambienteId INT,                                                  -- ID do ambiente (chave estrangeira)
+
+	FOREIGN KEY (usuarioId) REFERENCES Usuarios(usuarioId),          -- Relacionamento com Usuarios
+	FOREIGN KEY (ambienteId) REFERENCES Ambientes(ambienteId)        -- Relacionamento com Ambientes
+)
+
+-- ========================================
 -- CRIA A TABELA DE TIPOS DE SENSORES
 -- ========================================
 CREATE TABLE TipoSensores(
@@ -38,19 +58,10 @@ CREATE TABLE Sensores(
 	sensorId INT PRIMARY KEY,                                        -- Identificador único do sensor
 	sensorNome VARCHAR(50),                                          -- Nome do sensor
 	tipoSensorId INT,                                                -- Tipo do sensor (chave estrangeira)
+	ambienteId INT,
 
-	FOREIGN KEY (tipoSensorId) REFERENCES TipoSensores(tipoSensorId) -- Relacionamento com TipoSensores
-)
-
--- ========================================
--- CRIA A TABELA DE Ambientes
--- ========================================
-CREATE TABLE Ambientes(
-	ambienteId INT PRIMARY KEY,										 -- Identificador único de ambiente
-	ambienteNome varchar(40),										 -- Nome do ambiente
-	sensorId int,													 -- sensor que pertence ao ambiente (chave estrangeira)
-
-	FOREIGN KEY (sensorId) REFERENCES Sensores(sensorId)
+	FOREIGN KEY (tipoSensorId) REFERENCES TipoSensores(tipoSensorId),-- Relacionamento com TipoSensores
+	FOREIGN KEY (ambienteId) REFERENCES Ambientes(ambienteId)		 -- Relacionamento com Ambientes
 )
 
 -- ========================================
@@ -64,16 +75,4 @@ CREATE TABLE Medidas(
 	sensorId INT,
 
 	FOREIGN KEY (sensorId) REFERENCES Sensores(sensorId)
-)
-
--- ========================================
--- CRIA A TABELA DE USUÁRIOS COM SEUS SENSORES
--- ========================================
-CREATE TABLE UsuarioAmbiente(
-	usuarioAmbienteId INT PRIMARY KEY,                               -- Identificador único da relação
-	usuarioId INT,                                                   -- ID do usuário (chave estrangeira)
-	ambienteId INT,                                                  -- ID do ambiente (chave estrangeira)
-
-	FOREIGN KEY (usuarioId) REFERENCES Usuarios(usuarioId),          -- Relacionamento com Usuarios
-	FOREIGN KEY (ambienteId) REFERENCES Ambientes(ambienteId)        -- Relacionamento com Ambientes
 )
