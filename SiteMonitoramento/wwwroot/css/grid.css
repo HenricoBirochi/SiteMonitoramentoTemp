@@ -1,49 +1,52 @@
-﻿.titulo{
-    display: flex;
-    justify-content: center;
+﻿.titulo {
+  display: flex;
+  justify-content: center;
 }
-.titulo h3{
-    margin-right: 6px;
+.titulo h3 {
+  margin-right: 6px;
 }
 .caixona {
-    display: grid;
-    place-items: center;
-    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
-    gap: 10px; /* Espaçamento entre os itens */
+  display: grid;
+  place-items: center;
+  grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+  gap: 10px; /* Espaçamento entre os itens */
 }
 .caixas {
-    display: block;
-    width: 550px;
-    height: 150px;
-    border: 2px solid #dcdcdc;
-    box-shadow: #dcdcdc 0px 10px 8px;
-    border-radius: 16px;
-    margin-bottom: 10px;
-    position: relative;
+  display: block;
+  width: 564px;
+  height: 164px;
+  border: 2px solid #dcdcdc;
+  box-shadow: 10px 5px 5px black;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  position: relative;
 }
 .parametro {
-    position: absolute;
-    left: 5%;
-    top: 31%;
-    width: 9%;
-    height: 34%;
-    border-radius: 8px;
+  position: absolute;
+  left: 5%;
+  top: 31%;
+  width: 9%;
+  height: 34%;
+  border-radius: 8px;
 }
 .dados {
-    position: absolute;
-    left: 20%;
-    top: 26%;
+  position: absolute;
+  left: 20%;
+  top: 26%;
 }
 .formEdit {
-    position: absolute;
-    bottom: 73%;
-    left: 83%;
+  position: absolute;
+  bottom: 73%;
+  left: 83%;
 }
 .formDelete {
-    position: absolute;
-    bottom: 73%;
-    left: 91%;
+  position: absolute;
+  bottom: 73%;
+  left: 91%;
 }
-.botao{
-    border-radius: 8px;
+.botao {
+  border-radius: 8px;
+  background-color: #dcdcdc;
+  border: none;
+  box-shadow: 10px 5px 5px black;
 }
