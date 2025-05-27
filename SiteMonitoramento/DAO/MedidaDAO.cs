@@ -9,12 +9,11 @@ namespace SiteMonitoramento.DAO
     {
         protected override SqlParameter[] CriaParametros(Medida medida)
         {
-            SqlParameter[] parametros = new SqlParameter[5];
+            SqlParameter[] parametros = new SqlParameter[4];
             parametros[0] = new SqlParameter("medidaId", medida.MedidaId);
             parametros[1] = new SqlParameter("valorMedido", medida.ValorMedido);
             parametros[2] = new SqlParameter("horarioMedicao", medida.HorarioMedicao);
-            parametros[3] = new SqlParameter("parametro", medida.Parametro);
-            parametros[4] = new SqlParameter("sensorId", medida.SensorId);
+            parametros[3] = new SqlParameter("dispositivoId", medida.DispositivoId);
             return parametros;
         }
 
@@ -24,8 +23,7 @@ namespace SiteMonitoramento.DAO
             m.MedidaId = Convert.ToInt32(registro["medidaId"]);
             m.ValorMedido = Convert.ToDouble(registro["valorMedido"]);
             m.HorarioMedicao = Convert.ToDateTime(registro["horarioMedicao"]);
-            m.Parametro = registro["parametro"].ToString();
-            m.SensorId = Convert.ToInt32(registro["sensorId"]);
+            m.DispositivoId = Convert.ToInt32(registro["dispositivoId"]);
             return m;
         }
 

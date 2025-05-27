@@ -1,0 +1,14 @@
+﻿@model List<DispositivoMedidasViewModel>
+
+<div>
+    @Model[0].DispositivoNome
+    @foreach (var registro in Model)
+    {
+        <div>
+            <ul>
+                <li>@registro.ValorMedido</li>
+                <li>@registro.HorarioMedicao</li>
+            </ul>
+        </div>
+    }
+</div>

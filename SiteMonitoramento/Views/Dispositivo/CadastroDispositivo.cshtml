@@ -1,4 +1,4 @@
-﻿@model Ambiente
+﻿@model Dispositivo
 
 <div class="d-flex justify-content-center align-items-center">
     <div class="card p-4" style="max-width: 400px; width: 100%;">
@@ -8,12 +8,12 @@
                 <input type="hidden" name="Operacao" value="@ViewBag.Operacao">
             </div>
             <div class="mb-3">
-                <input asp-for="AmbienteId" class="form-control" hidden>
+                <input asp-for="DispositivoId" class="form-control" hidden>
             </div>
             <div class="mb-3">
-                <label for="AmbienteNome" class="form-label">Nome do Ambiente</label>
-                <input asp-for="AmbienteNome" class="form-control" placeholder="Digite o nome do ambiente" required>
-                <span asp-validation-for="AmbienteNome" class="text-danger"></span>
+                <label for="DispositivoNome" class="form-label">Nome do Ambiente</label>
+                <input asp-for="DispositivoNome" class="form-control" placeholder="Digite o nome do ambiente" required>
+                <span asp-validation-for="DispositivoNome" class="text-danger"></span>
             </div>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary">Salvar Ambiente</button>

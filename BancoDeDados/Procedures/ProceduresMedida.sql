@@ -5,41 +5,38 @@ USE HephaiTech
 GO
 
 -- ========================================
--- PROCEDURE: spInserirUsuario
--- Descrição: Insere um novo registro na tabela Usuarios
+-- PROCEDURE: spInserirMedidas
+-- Descrição: Insere um novo registro na tabela Medidas
 -- Parâmetros: usuarioId (INT), usuarioNome (NVARCHAR), senha (NVARCHAR), email (NVARCHAR), cpf (VARCHAR)
 -- ========================================
 CREATE PROCEDURE spInserirMedidas
     @medidaId INT,
     @valorMedido DECIMAL(18,2),
     @horarioMedicao DATETIME,
-	@parametro varchar(20),
-    @sensorId INT
+	@dispositivoId int
 AS
 BEGIN
-    INSERT INTO Medidas(medidaId, valorMedido, horarioMedicao, parametro, sensorId)
-    VALUES (@medidaId, @valorMedido, @horarioMedicao, @parametro, @sensorId)
+    INSERT INTO Medidas (medidaId, valorMedido, horarioMedicao, dispositivoId)
+    VALUES (@medidaId, @valorMedido, @horarioMedicao, @dispositivoId)
 END
 GO
 
 -- ========================================
--- PROCEDURE: spAlterarUsuario
--- Descrição: Atualiza os dados de um usuário existente na tabela Usuarios
+-- PROCEDURE: spAlterarMedidas
+-- Descrição: Atualiza os dados de um usuário existente na tabela Medidas
 -- Parâmetros: usuarioId (INT), usuarioNome (NVARCHAR), senha (NVARCHAR), email (NVARCHAR), cpf (VARCHAR)
 -- ========================================
 CREATE PROCEDURE spAlterarMedidas
 	@medidaId INT,
     @valorMedido DECIMAL(18,2),
     @horarioMedicao DATETIME,
-	@parametro varchar(20),
-    @sensorId INT
+    @dispositivoId INT
 AS
 BEGIN
     UPDATE Medidas
     SET valorMedido = @valorMedido,
         horarioMedicao = @horarioMedicao,
-		parametro = @parametro,
-        sensorId = @sensorId
+        dispositivoId = @dispositivoId
     WHERE medidaId = @medidaId
 END
 GO

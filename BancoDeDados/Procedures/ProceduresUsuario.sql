@@ -5,7 +5,7 @@ USE HephaiTech
 GO
 
 -- ========================================
--- PROCEDURE: spInserirUsuario
+-- PROCEDURE: spInserirUsuarios
 -- Descrição: Insere um novo registro na tabela Usuarios
 -- Parâmetros: usuarioId (INT), usuarioNome (NVARCHAR), senha (NVARCHAR), email (NVARCHAR), cpf (VARCHAR)
 -- ========================================
@@ -24,7 +24,7 @@ END
 GO
 
 -- ========================================
--- PROCEDURE: spAlterarUsuario
+-- PROCEDURE: spAlterarUsuarios
 -- Descrição: Atualiza os dados de um usuário existente na tabela Usuarios
 -- Parâmetros: usuarioId (INT), usuarioNome (NVARCHAR), senha (NVARCHAR), email (NVARCHAR), cpf (VARCHAR)
 -- ========================================
