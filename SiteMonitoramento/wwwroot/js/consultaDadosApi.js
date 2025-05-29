@@ -1,0 +1,49 @@
+﻿// Função principal para buscar dados
+function buscaDadosApi() {
+    const domain = 'ec2-54-173-141-140.compute-1.amazonaws.com';
+    const linkApi = `http://${domain}:1026/v2/entities/urn:ngsi-ld:Temp:${dispositivoId}/attrs/temperature`;
+
+    $.ajax({
+        url: linkApi,
+        method: 'GET',
+        timeout: 20000,
+        headers: {  
+            'fiware-service': 'smart',
+            'fiware-servicepath': '/',
+            'accept': 'application/json'
+        },
+        success: function (dados) {
+            // Remove o indicador de carregamento
+            $('#loading').remove();
+
+            // Cria nova linha na tabela
+            const novaLinha = `
+                <tr>
+                    <td>${dados.value} °C</td>
+                    <td>${dados.metadata.TimeInstant.value}</td>
+                </tr>
+            `;
+
+            // Adiciona no início da tabela
+            $('#tabela-dados').prepend(novaLinha);
+
+            // Limita a 10 registros
+            if ($('#tabela-dados tr').length > 10) {
+                $('#tabela-dados tr:last').remove();
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Erro na requisição:', status, error);
+            $('#loading').html('<td colspan="2">Erro ao carregar dados. Tentando novamente...</td>');
+        }
+    });
+}
+
+// Inicialização quando o documento estiver pronto
+jQuery(function ($) {
+    // Executa imediatamente
+    buscaDadosApi();
+
+    // Configura o intervalo de atualização (5 segundos)
+    setInterval(buscaDadosApi, 5000);
+});

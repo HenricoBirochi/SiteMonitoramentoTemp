@@ -1,23 +1,25 @@
-﻿@model List<DispositivoMedidasViewModel>
+﻿@model int
 
-@if (Model != null)
+<form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Valor (ºC)</th>
+                <th>Horário medição</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-dados">
+            <tr id="loading">
+                <td colspan="2">Carregando dados...</td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+
+@section Scripts
 {
-    <div>
-        @Model[0].DispositivoNome
-        @foreach (var registro in Model)
-        {
-            <div>
-                <ul>
-                    <li>@registro.ValorMedido</li>
-                    <li>@registro.HorarioMedicao</li>
-                </ul>
-            </div>
-        }
-    </div>
-}
-else
-{
-    <div>
-        Ainda não existem medidas
-    </div>
+    <script>
+        let dispositivoId = @Model;
+    </script>
+    <script src="~/js/consultaDadosApi.js"></script>
 }
