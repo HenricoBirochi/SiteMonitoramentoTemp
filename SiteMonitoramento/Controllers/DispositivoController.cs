@@ -42,6 +42,7 @@ namespace SiteMonitoramento.Controllers
                 ModelState.AddModelError("DispositivoNome", "O nome do dispositivo precisa ser preenchido");
         }
 
+        #region Metodos Assincronos para trabalhar com a remoção e adição de dispositivos na API
         public async Task<IActionResult> SaveAssincrono(Dispositivo model, string Operacao)
         {
             try
@@ -54,19 +55,16 @@ namespace SiteMonitoramento.Controllers
                     PreencheDadosParaView(Operacao, model);
                     return View(NomeViewForm, model);
                 }
-                else
+                if (Operacao == "I")
                 {
-                    if (Operacao == "I")
-                    {
-                        await CriaDispositivoMongo();
-                        await CriaComandosDispositivo();
-                        await CriaSubscribeTemperature();
-                        DAO.Inserir(model);
-                    }
-                    else
-                        DAO.Alterar(model);
+                    await CriaDispositivoMongo();
+                    await CriaComandosDispositivo();
+                    await CriaSubscribeTemperature();
+                    DAO.Inserir(model);
                     return RedirectToAction("Index");
                 }
+                DAO.Alterar(model);
+                return RedirectToAction("Index");
             }
             catch (Exception erro)
             {
@@ -74,6 +72,23 @@ namespace SiteMonitoramento.Controllers
             }
 
         }
+        public async Task<IActionResult> DeleteAssincrono(int id)
+        {
+            try
+            {
+                await DeletaDispositivoIotAgent(id);
+                await DeletaDispositivoOrion(id);
+                DAO.Delete(id);
+                return RedirectToAction("Index");
+            }
+            catch (Exception erro)
+            {
+                return View("Error", new ErrorViewModel(erro.ToString()));
+            }
+        }
+        #endregion
+
+        #region Cria Dispositivo na API
         public async Task CriaDispositivoMongo()
         {
             var dao = new DispositivoDAO();
@@ -92,7 +107,6 @@ namespace SiteMonitoramento.Controllers
             request.Headers.Add("fiware-servicepath", "/");
             request.Content = content;
 
-            //var handler = new HttpClientHandler();
             using (var httpClient = new HttpClient())
             {
                 httpClient.Timeout = TimeSpan.FromSeconds(30);
@@ -165,5 +179,51 @@ namespace SiteMonitoramento.Controllers
             }
 
         }
+        #endregion
+
+        #region Deleta Dispositivo na API
+        public async Task DeletaDispositivoIotAgent(int id)
+        {
+            string domain = "ec2-54-173-141-140.compute-1.amazonaws.com"; //Depois mudar para o ip da VM na AWS
+            string url = $"http://{domain}:4041/iot/devices/temp" + id;
+
+            var request = new HttpRequestMessage(HttpMethod.Delete, url);
+            request.Headers.Add("fiware-service", "smart");
+            request.Headers.Add("fiware-servicepath", "/");
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.Timeout = TimeSpan.FromSeconds(30);
+                using (var response = await httpClient.SendAsync(request))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        string errorDetails = await response.Content.ReadAsStringAsync();
+                        throw new Exception($"Erro ao deletar dispositivo: {errorDetails}");
+                    }
+                }
+            }
+        }
+        public async Task DeletaDispositivoOrion(int id)
+        {
+            string domain = "ec2-54-173-141-140.compute-1.amazonaws.com"; //Depois mudar para o ip da VM na AWS
+            string url = $"http://{domain}:1026/v2/entities/urn:ngsi-ld:Temp:" + id;
+
+            var request = new HttpRequestMessage(HttpMethod.Delete, url);
+            request.Headers.Add("fiware-service", "smart");
+            request.Headers.Add("fiware-servicepath", "/");
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.Timeout = TimeSpan.FromSeconds(30);
+                using (var response = await httpClient.SendAsync(request))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        string errorDetails = await response.Content.ReadAsStringAsync();
+                        throw new Exception($"Erro ao deletar dispositivo: {errorDetails}");
+                    }
+                }
+            }
+        }
+        #endregion
     }
 }
