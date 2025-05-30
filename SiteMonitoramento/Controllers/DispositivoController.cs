@@ -21,8 +21,10 @@ namespace SiteMonitoramento.Controllers
         {
             try
             {
-                DispositivoDAO dao = new DispositivoDAO();
-                var listaDispositivoMedidas = dao.ListagemDispositivoMedidasJoin(id);
+                MedidaDAO medidaDAO = new MedidaDAO();
+                ViewBag.GeraMedidaId = medidaDAO.ProximoId();
+                DispositivoDAO dispositivoDAO = new DispositivoDAO();
+                var listaDispositivoMedidas = dispositivoDAO.ListagemDispositivoMedidasJoin(id);
                 return View(id);
             }
             catch (Exception erro)

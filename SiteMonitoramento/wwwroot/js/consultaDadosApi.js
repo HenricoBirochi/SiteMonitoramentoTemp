@@ -13,15 +13,17 @@ function buscaDadosApi() {
             'accept': 'application/json'
         },
         success: function (dados) {
-            // Remove o indicador de carregamento
-            $('#loading').remove();
-
             // Cria nova linha na tabela
             const novaLinha = `
-                <tr>
-                    <td>${dados.value} °C</td>
-                    <td>${dados.metadata.TimeInstant.value}</td>
-                </tr>
+                <form class="form-medicao">
+                    <tr>
+                        <input name="MedidaId" value="${medidaId}" hidden>
+                        <td><input name="ValorMedido" value="${dados.value}" readonly> °C</td>
+                        <td><input name="HorarioMedicao" value="${dados.metadata.TimeInstant.value}" readonly></td>
+                        <input name="DispositivoId" value="${dispositivoId}" hidden>
+                        <td><button type="submit" class="btn btn-primary">Salvar Medida</button></td>
+                    </tr>
+                </form>
             `;
 
             // Adiciona no início da tabela
