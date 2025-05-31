@@ -25,7 +25,7 @@
                     </div>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -39,28 +39,27 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Sobre">Sobre</a>
                         </li>
                     </ul>
-                    <div class="nav-account">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Usuario" asp-action="Cadastro">Cadastrar</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="" asp-area="" asp-controller="Usuario" asp-action="Login">Entrar</a>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in-icon lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" /><polyline points="10 17 15 12 10 7" /><line x1="15" x2="3" y1="12" y2="12" /></svg>
-                            </li>
-                        </ul>
-                    </div>
+
                     <div class="nav-account">
                         @{
                             if (ViewBag.Usuario == null)
                             {
+                                <ul class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Usuario" asp-action="Cadastro">Cadastrar</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="" asp-area="" asp-controller="Usuario" asp-action="Login">Entrar</a>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-in-icon lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" /><polyline points="10 17 15 12 10 7" /><line x1="15" x2="3" y1="12" y2="12" /></svg>
+                                    </li>
+                                </ul>
                                 <a href="/Usuario/Login" class="user"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg></a>
                             }
                             else
                             {
                                 Usuario user = ViewBag.Usuario;
-                                <a href="/Usuario/LogOff">Sair</a>
                                 <a href="/Usuario/Editar?id=@user.UsuarioId"><img src="data:image/jpeg;base64,@user.ImagemEmBase64" width="30" class="img-responsive user"></a>
+                                <a href="/Usuario/LogOff">Sair</a>
                             }
                         }
                     </div>

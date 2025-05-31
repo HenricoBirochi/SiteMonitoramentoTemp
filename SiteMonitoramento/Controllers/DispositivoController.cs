@@ -95,7 +95,7 @@ namespace SiteMonitoramento.Controllers
         {
             var dao = new DispositivoDAO();
             int idUltimoDisp = dao.ProximoId();
-            string domain = "ec2-54-173-141-140.compute-1.amazonaws.com"; //Depois mudar para o ip da VM na AWS
+            string domain = "ec2-44-201-144-89.compute-1.amazonaws.com"; //Depois mudar para o ip da VM na AWS
             string url = $"http://{domain}:4041/iot/devices";
             var content = new StringContent("{\n  \"devices\": [\n    {\n      \"device_id\": \"temp" + idUltimoDisp + "\",         \n      " +
                 "\"entity_name\": \"urn:ngsi-ld:Temp:" + idUltimoDisp + "\",   \n      \"entity_type\": \"Temp\",          \n      \"protocol\": " +
@@ -126,7 +126,7 @@ namespace SiteMonitoramento.Controllers
         {
             var dao = new DispositivoDAO();
             int idUltimoDisp = dao.ProximoId();
-            string domain = "ec2-54-173-141-140.compute-1.amazonaws.com"; //Depois mudar para o ip da VM na AWS
+            string domain = "ec2-44-201-144-89.compute-1.amazonaws.com"; //Depois mudar para o ip da VM na AWS
             string url = $"http://{domain}:1026/v2/registrations";
             var content = new StringContent("{\n  \"description\": \"Device Commands\", \n  \"dataProvided\": {\n    \"entities\": [\n      {\n        " +
                 "\"id\": \"urn:ngsi-ld:Temp:" + idUltimoDisp + "\", \"type\": \"Temp\" \n      }\n    ],\n    \"attrs\": [\"on\", \"off\"] \n  },\n  \"provider\": " +
@@ -156,7 +156,7 @@ namespace SiteMonitoramento.Controllers
         {
             var dao = new DispositivoDAO();
             int idUltimoDisp = dao.ProximoId();
-            string domain = "ec2-54-173-141-140.compute-1.amazonaws.com"; //Depois mudar para o ip da VM na AWS
+            string domain = "ec2-44-201-144-89.compute-1.amazonaws.com"; //Depois mudar para o ip da VM na AWS
             string url = $"http://{domain}:1026/v2/subscriptions";
             var content = new StringContent("{\r\n  \"description\": \"Notify STH-Comet of all Motion Sensor count changes\", \n  \"subject\": {\r\n    \"entities\": " +
                 "[\r\n      {\r\n        \"id\": \"urn:ngsi-ld:Temp:" + idUltimoDisp + "\",\r\n        \"type\": \"Temp\"\r\n      }\r\n    ],\r\n    \"condition\": " +
@@ -186,7 +186,7 @@ namespace SiteMonitoramento.Controllers
         #region Deleta Dispositivo na API
         public async Task DeletaDispositivoIotAgent(int id)
         {
-            string domain = "ec2-54-173-141-140.compute-1.amazonaws.com"; //Depois mudar para o ip da VM na AWS
+            string domain = "ec2-44-201-144-89.compute-1.amazonaws.com"; //Depois mudar para o ip da VM na AWS
             string url = $"http://{domain}:4041/iot/devices/temp" + id;
 
             var request = new HttpRequestMessage(HttpMethod.Delete, url);
@@ -207,7 +207,7 @@ namespace SiteMonitoramento.Controllers
         }
         public async Task DeletaDispositivoOrion(int id)
         {
-            string domain = "ec2-54-173-141-140.compute-1.amazonaws.com"; //Depois mudar para o ip da VM na AWS
+            string domain = "ec2-44-201-144-89.compute-1.amazonaws.com"; //Depois mudar para o ip da VM na AWS
             string url = $"http://{domain}:1026/v2/entities/urn:ngsi-ld:Temp:" + id;
 
             var request = new HttpRequestMessage(HttpMethod.Delete, url);
