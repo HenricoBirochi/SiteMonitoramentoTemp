@@ -11,17 +11,5 @@ namespace SiteMonitoramento.Controllers
         {
             ExigeAutenticacao = true;
         }
-        public void Save(Medida model)
-        {
-            try
-            {
-                var dao = new MedidaDAO();
-                dao.Inserir(model);
-            }
-            catch (Exception erro)
-            {
-                throw new Exception("Erro ao salvar medida: " + erro.Message);
-            }
-        }
     }
 }

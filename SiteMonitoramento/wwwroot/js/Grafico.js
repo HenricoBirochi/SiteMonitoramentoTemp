@@ -6,7 +6,7 @@ let grafico;
 // Função para buscar dados da API
 function buscaDadosApi() {
 
-    const domain = 'ec2-44-201-144-89.compute-1.amazonaws.com';
+    const domain = 'ec2-3-83-174-152.compute-1.amazonaws.com';
     const linkApi = `http://${domain}:1026/v2/entities/urn:ngsi-ld:Temp:${dispositivoId}/attrs/temperature`;
 
     $.ajax({
@@ -24,14 +24,36 @@ function buscaDadosApi() {
             
 
             // Mantém apenas os últimos N pontos (ex: últimos 20)
-            //const maxPontos = 20;
-            //if (horarios.length > maxPontos) {
-            //    horarios.shift();
-            //    temperaturas.shift();
-            //}
+            const maxPontos = 20;
+            if (horarios.length > maxPontos) {
+                horarios.shift();
+                temperaturas.shift();
+            }
 
             // Atualiza o gráfico
             atualizaGrafico();
+
+            // Atualiza termomêtro
+            atualizarGauge(dados.value);
+
+            const novaLinha = `
+                <tr>
+                    <td>
+                        ${dados.value}
+                    </td>
+                    <td>
+                        ${dados.metadata.TimeInstant.value}
+                    </td>
+                </tr>
+            `;
+
+            // Adiciona no início da tabela
+            $('#tabela-dados').prepend(novaLinha);
+
+            // Limita a 10 registros
+            if ($('#tabela-dados tr').length > 10) {
+                $('#tabela-dados tr:last').remove();
+            }
         },
         error: function (err) {
             console.log('Erro ao buscar dados:', err);
@@ -48,8 +70,16 @@ function atualizaGrafico() {
     }
 }
 
+// Função para atualizar o termomêtro
+function atualizarGauge(temperatura) {
+    if (termometroGauge) {
+        termometroGauge.refresh(temperatura);
+    }
+}
+
 // Inicializa o gráfico quando a página carrega
 document.addEventListener('DOMContentLoaded', function () {
+    //Gráfico
     let ctx = document.getElementById('graficoTemperatura').getContext('2d');
     grafico = new Chart(ctx, {
         type: 'line',
@@ -78,7 +108,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    //Termometro
+    termometroGauge = new JustGage({
+        id: "termometro-gauge",
+        value: 0,   
+        min: 0,
+        max: 100,
+        title: "Temperatura",
+        label: "°C",
+        levelColors: ["#00d5ff", "#ffa200", "#ff0008"]
+    });
+
     // Busca dados imediatamente e depois a cada 5 segundos
     buscaDadosApi();
-    setInterval(buscaDadosApi, 1000);
+    setInterval(buscaDadosApi, 5000);
 });
