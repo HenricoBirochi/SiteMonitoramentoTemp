@@ -19,9 +19,9 @@ namespace SiteMonitoramento.Controllers
             ExigeAutenticacao = true;
         }
 
-        public async Task ConsultaEAdicionaMedidas(int dispositivoId)
+        public async Task<IActionResult> ConsultaEAdicionaMedidas(int dispositivoId)
         {
-            string domain = "ec2-3-89-196-93.compute-1.amazonaws.com";
+            string domain = "ec2-13-218-19-179.compute-1.amazonaws.com";
             string url = $"http://{domain}:8666/STH/v1/contextEntities/type/Temp/id/urn:ngsi-ld:Temp:{dispositivoId}/attributes/temperature?lastN=50";
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -77,6 +77,7 @@ namespace SiteMonitoramento.Controllers
                     }
                 }
             }
+            return RedirectToAction("Index", "Dispositivo");
         }
         public IActionResult ObtemDadosConsultaAvancada(double valorMedido, DateTime dataInicial, DateTime dataFinal)
         {

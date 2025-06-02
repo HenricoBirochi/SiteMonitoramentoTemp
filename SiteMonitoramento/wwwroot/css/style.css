@@ -153,3 +153,30 @@ body {
         background: #f57c18;
         color: white;
     }
+
+
+.visualizaGrafico {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+    .visualizaGrafico canvas {
+        max-width: 64rem;
+        max-height: 32rem;
+    }
+
+.userButtons{
+    display:flex;
+    flex-direction:row;
+    gap:1rem;
+    align-items:center;
+    justify-content:center;
+}
+
+.imagemUsuario img {
+    border-radius: 0.2rem;
+    margin: 1rem auto 0 auto;
+    display: block;
+}

@@ -6,7 +6,7 @@ let grafico;
 // Função para buscar dados da API
 function buscaDadosApi() {
 
-    const domain = 'ec2-3-89-196-93.compute-1.amazonaws.com';
+    const domain = 'ec2-13-218-19-179.compute-1.amazonaws.com';
     const linkApi = `http://${domain}:1026/v2/entities/urn:ngsi-ld:Temp:${dispositivoId}/attrs/temperature`;
 
     $.ajax({

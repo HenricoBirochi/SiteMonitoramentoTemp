@@ -1,70 +1,72 @@
 ﻿@model Usuario
 
 <div class="d-flex justify-content-center align-items-center">
-    <div class="card p-4" style="max-width: 400px; width: 100%;">
-        @if (ViewBag.Operacao == "I")
-        {
-            <h2 class="card-title text-center mb-4">Cadastrar Usuário</h2>
-        }
-        else
-        {
-            <h2 class="card-title text-center mb-4">Alterar Usuário</h2>
-        }
-        <form asp-action="Salvar" method="post" enctype="multipart/form-data">
-            <input name="operacao" value="@ViewBag.Operacao" hidden>
-            <input asp-for="UsuarioId" class="form-control" hidden>
-            <div class="mb-3">
-                <label for="UsuarioNome" class="form-label">Nome</label>
-                <input asp-for="UsuarioNome" class="form-control" placeholder="Digite seu Nome completo">
-                <span asp-validation-for="UsuarioNome" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label for="Email" class="form-label">E-mail</label>
-                <input asp-for="Email" class="form-control" placeholder="Digite seu e-mail">
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label for="Senha" class="form-label">Senha</label>
-                <input asp-for="Senha" class="form-control" placeholder="No mínimo 8 caracteres">
-                <span asp-validation-for="Senha" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <label for="CPF" class="form-label">CPF</label>
-                <input asp-for="CPF" class="form-control" placeholder="Digite seu CPF">
-                <span asp-validation-for="CPF" class="text-danger"></span>
-            </div>
-            <div class="mb-3">
-                <input type="file" name="Imagem" id="Imagem" onchange="exibirImagem()" class="btn btn-secondary">
-                <img id="imgPreview" src="data:image/jpeg;base64,@Model.ImagemEmBase64" class="img-responsive" width="100">
-                <span asp-validation-for="Imagem" class="text-danger"></span>
-            </div>
-            @{
-                if (ViewBag.Operacao == "I")
-                {
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Criar usuário</button>
-                    </div>
-                }
-                else
-                {
-                    <div class="d-grid gap-2">
-                        <a href="/Usuario/Delete?id=@Model.UsuarioId" onclick="return confirm('Tem certeza que deseja excluir este Sensor?');" class="btn btn-danger">Deletar usuário</a>
-                    </div>
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Alterar usuário</button>
-                    </div>
-                }
-            }
-        </form>
-    </div>
+	<div class="card p-4" style="max-width: 400px; width: 100%;">
+		@if (ViewBag.Operacao == "I")
+		{
+			<h2 class="card-title text-center mb-4">Cadastrar Usuário</h2>
+		}
+		else
+		{
+			<h2 class="card-title text-center mb-4">Alterar Usuário</h2>
+		}
+		<form asp-action="Salvar" method="post" enctype="multipart/form-data">
+			<input name="operacao" value="@ViewBag.Operacao" hidden>
+			<input asp-for="UsuarioId" class="form-control" hidden>
+			<div class="mb-3">
+				<label for="UsuarioNome" class="form-label">Nome</label>
+				<input asp-for="UsuarioNome" class="form-control" placeholder="Digite seu Nome completo">
+				<span asp-validation-for="UsuarioNome" class="text-danger"></span>
+			</div>
+			<div class="mb-3">
+				<label for="Email" class="form-label">E-mail</label>
+				<input asp-for="Email" class="form-control" placeholder="Digite seu e-mail">
+				<span asp-validation-for="Email" class="text-danger"></span>
+			</div>
+			<div class="mb-3">
+				<label for="Senha" class="form-label">Senha</label>
+				<input asp-for="Senha" class="form-control" placeholder="No mínimo 8 caracteres" type="password">
+				<span asp-validation-for="Senha" class="text-danger"></span>
+			</div>
+			<div class="mb-3">
+				<label for="CPF" class="form-label">CPF</label>
+				<input asp-for="CPF" class="form-control" placeholder="Digite seu CPF">
+				<span asp-validation-for="CPF" class="text-danger"></span>
+			</div>
+			<div class="mb-3 imagemUsuario">
+				<input type="file" name="Imagem" id="Imagem" onchange="exibirImagem()" class="btn btn-secondary">
+				<img id="imgPreview" src="data:image/jpeg;base64,@Model.ImagemEmBase64" class="img-responsive" width="100">
+				<span asp-validation-for="Imagem" class="text-danger"></span>
+			</div>
+			@{
+				if (ViewBag.Operacao == "I")
+				{
+					<div class="d-grid gap-2">
+						<button type="submit" class="btn btn-primary">Criar usuário</button>
+					</div>
+				}
+				else
+				{
+					<div class="userButtons">
+						<div class="d-grid gap-2">
+							<button type="submit" class="btn btn-primary">Alterar usuário</button>
+						</div>
+						<div class="d-grid gap-2">
+							<a href="/Usuario/Delete?id=@Model.UsuarioId" onclick="return confirm('Tem certeza que deseja excluir este Sensor?');" class="btn btn-danger">Deletar usuário</a>
+						</div>
+					</div>
+				}
+			}
+		</form>
+	</div>
 </div>
 
 <script>
-    function exibirImagem() {
-        var oFReader = new FileReader();
-        oFReader.readAsDataURL(document.getElementById("Imagem").files[0]);
-        oFReader.onload = function (oFREvent) {
-            document.getElementById("imgPreview").src = oFREvent.target.result;
-        };
-    }
+	function exibirImagem() {
+		var oFReader = new FileReader();
+		oFReader.readAsDataURL(document.getElementById("Imagem").files[0]);
+		oFReader.onload = function (oFREvent) {
+			document.getElementById("imgPreview").src = oFREvent.target.result;
+		};
+	}
 </script>

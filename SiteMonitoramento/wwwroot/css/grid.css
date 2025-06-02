@@ -34,19 +34,31 @@
   left: 20%;
   top: 26%;
 }
-.formEdit {
-  position: absolute;
-  bottom: 73%;
-  left: 83%;
-}
-.formDelete {
-  position: absolute;
-  bottom: 73%;
-  left: 91%;
-}
+
+
 .botao {
     border-radius: 8px;
+    min-width:2rem;
+    min-height:2rem;
     background-color: #dcdcdc;
     border: none;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: background 0.1s;
 }
+
+.botao:hover {
+    background: #fb923c;
+    color:white;
+}
+
+.botoesDispositivo {
+    margin-top: 1rem;
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap:1rem;
+}
+
+
