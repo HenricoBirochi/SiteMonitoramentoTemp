@@ -40,3 +40,24 @@ BEGIN
     WHERE medidaId = @medidaId
 END
 GO
+
+create procedure spConsultaAvancadaMedidas
+(
+@valorMedido decimal(18,2),
+@dataInicial datetime,
+@dataFinal datetime
+)
+as
+begin
+	declare @valorMedidoIni int
+	declare @valorMedidoFim int
+
+	set @valorMedidoIni = case @valorMedido when 0 then 0 else @valorMedido end
+	set @valorMedidoFim = case @valorMedido when 0 then 999999 else @valorMedido end
+
+	select m.*
+	from Medidas m
+	where m.horarioMedicao between @dataInicial and @dataFinal and
+	m.valorMedido between @valorMedidoIni and @valorMedidoFim;
+end
+GO

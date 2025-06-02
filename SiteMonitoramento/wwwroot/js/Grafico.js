@@ -6,7 +6,7 @@ let grafico;
 // Função para buscar dados da API
 function buscaDadosApi() {
 
-    const domain = 'ec2-3-83-174-152.compute-1.amazonaws.com';
+    const domain = 'ec2-3-89-196-93.compute-1.amazonaws.com';
     const linkApi = `http://${domain}:1026/v2/entities/urn:ngsi-ld:Temp:${dispositivoId}/attrs/temperature`;
 
     $.ajax({
@@ -81,6 +81,8 @@ function atualizarGauge(temperatura) {
 document.addEventListener('DOMContentLoaded', function () {
     //Gráfico
     let ctx = document.getElementById('graficoTemperatura').getContext('2d');
+    ctx.canvas.width = 100;  // Largura em pixels
+    ctx.canvas.height = 100; // Altura em pixels
     grafico = new Chart(ctx, {
         type: 'line',
         data: {
@@ -116,10 +118,12 @@ document.addEventListener('DOMContentLoaded', function () {
         max: 100,
         title: "Temperatura",
         label: "°C",
-        levelColors: ["#00d5ff", "#ffa200", "#ff0008"]
+        levelColors: ["#00d5ff", "#ffa200", "#ff0008"],
+        width: 200,
+        height: 200
     });
 
     // Busca dados imediatamente e depois a cada 5 segundos
     buscaDadosApi();
-    setInterval(buscaDadosApi, 5000);
+    setInterval(buscaDadosApi, 1000);
 });

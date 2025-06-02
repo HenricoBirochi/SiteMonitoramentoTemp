@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using SiteMonitoramento.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace SiteMonitoramento.DAO
@@ -35,6 +36,22 @@ namespace SiteMonitoramento.DAO
         protected override void SetTabela()
         {
             Tabela = "Medidas";
+        }
+
+        //Serve para fazer a consulta avançada
+        public List<Medida> ConsultaAvancadaMedidas(double valorMedido, DateTime dataInicial, DateTime dataFinal)
+        {
+            SqlParameter[] p = 
+            {
+                new SqlParameter("valorMedido", valorMedido),
+                new SqlParameter("dataInicial", dataInicial),
+                new SqlParameter("dataFinal", dataFinal),
+            };
+            var tabela = HelperDAO.ExecutaProcSelect("spConsultaAvancadaMedidas", p);
+            var lista = new List<Medida>();
+            foreach (DataRow dr in tabela.Rows)
+                lista.Add(MontaModel(dr));
+            return lista;
         }
     }
 }

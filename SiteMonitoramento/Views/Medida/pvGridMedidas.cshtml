@@ -1,0 +1,14 @@
+﻿@model List<Medida>
+<table class="table table-striped">
+    <tr>
+        <th>Temperatura em ºC</th>
+        <th>Data e Horário da Medição</th>
+    </tr>
+    @foreach (var medida in Model)
+    {
+        <tr>
+            <td>@medida.ValorMedido</td>
+            <td>@medida.HorarioMedicao</td>
+        </tr>
+    }
+</table>
