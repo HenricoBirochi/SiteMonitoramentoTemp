@@ -5,53 +5,53 @@ USE HephaiTech
 GO
 
 -- ========================================
--- PROCEDURE: spInserirUsuarioSensor
+-- PROCEDURE: spInserirUsuarioDispositivo
 -- Descrição: Insere um novo vínculo entre usuário e sensor na tabela UsuarioSensores
--- Parâmetros: usuarioSensorId (INT), usuarioId (INT), sensorId (INT)
+-- Parâmetros: usuarioDispositivoId (INT), usuarioId (INT), dispositivoId (INT)
 -- ========================================
-CREATE PROCEDURE spInserirUsuarioAmbiente
-    @usuarioAmbienteId INT,
+CREATE PROCEDURE spInserirUsuarioDispositivo
+    @usuarioDispositivoId INT,
     @usuarioId INT,
-    @ambienteId INT
+    @dispositivoId INT
 AS
 BEGIN
-    INSERT INTO UsuarioAmbiente (usuarioAmbienteId, usuarioId, ambienteId)
-    VALUES (@usuarioAmbienteId, @usuarioId, @ambienteId)
+    INSERT INTO UsuarioDispositivo (usuarioDispositivoId, usuarioId, dispositivoId)
+    VALUES (@usuarioDispositivoId, @usuarioId, @dispositivoId)
 END
 GO
 
 -- ========================================
--- PROCEDURE: spAlterarUsuarioSensor
+-- PROCEDURE: spAlterarUsuarioDispositivo
 -- Descrição: Atualiza o vínculo entre usuário e sensor na tabela UsuarioSensores
 -- Parâmetros: usuarioSensorId (INT), usuarioId (INT), sensorId (INT)
 -- ========================================
-CREATE PROCEDURE spAlterarUsuarioAmbiente
-    @usuarioAmbienteId INT,
+CREATE PROCEDURE spAlterarUsuarioDispositivo
+    @usuarioDispositivoId INT,
     @usuarioId INT,
-    @ambienteId INT
+    @dispositivoId INT
 AS
 BEGIN
-    UPDATE UsuarioAmbiente
+    UPDATE UsuarioDispositivo
     SET usuarioId = @usuarioId,
-        ambienteId = @ambienteId
-    WHERE usuarioAmbienteId = @usuarioAmbienteId
+        dispositivoId = @dispositivoId
+    WHERE usuarioDispositivoId = @usuarioDispositivoId
 END
 GO
 
 -- ========================================
--- PROCEDURE: spListarUsuarioSensorJoin
+-- PROCEDURE: spListarUsuarioDispositivoJoin
 -- Descrição: Retorna a relação entre as tabelas UsuarioSensores, Usuarios e Sensores com dados detalhados
 -- Sem parâmetros
 -- ========================================
-CREATE PROCEDURE spListarUsuarioAmbienteJoin
+CREATE PROCEDURE spListarUsuarioDispositivoJoin
 AS
 BEGIN
     SELECT 
-        us.usuarioAmbienteId, us.usuarioId, us.ambienteId,
+        us.usuarioDispositivoId, us.usuarioId, us.dispositivoId,
         u.usuarioNome, u.email, u.cpf, u.imagem,
-        a.ambienteNome
-    FROM UsuarioAmbiente us
+        d.dispositivoNome
+    FROM UsuarioDispositivo us
     INNER JOIN Usuarios u ON us.usuarioId = u.usuarioId
-    INNER JOIN Ambientes a ON us.ambienteId = a.ambienteId
+    INNER JOIN Dispositivos d ON us.dispositivoId = d.dispositivoId
 END
 GO

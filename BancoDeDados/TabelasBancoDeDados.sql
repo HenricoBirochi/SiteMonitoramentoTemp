@@ -23,45 +23,23 @@ CREATE TABLE Usuarios(
 )
 
 -- ========================================
--- CRIA A TABELA DE Ambientes
+-- CRIA A TABELA DE Dispositivos
 -- ========================================
-CREATE TABLE Ambientes(
-	ambienteId INT PRIMARY KEY,										 -- Identificador único de ambiente
-	ambienteNome varchar(40)										 -- Nome do ambiente
+CREATE TABLE Dispositivos(
+	dispositivoId INT PRIMARY KEY,									 -- Identificador único de dispositivo
+	dispositivoNome varchar(40)										 -- Nome do ambiente
 )
 
 -- ========================================
 -- CRIA A TABELA DE USUÁRIOS COM SEUS SENSORES
 -- ========================================
-CREATE TABLE UsuarioAmbiente(
-	usuarioAmbienteId INT PRIMARY KEY,                               -- Identificador único da relação
+CREATE TABLE UsuarioDispositivo(
+	usuarioDispositivoId INT PRIMARY KEY,                               -- Identificador único da relação
 	usuarioId INT,                                                   -- ID do usuário (chave estrangeira)
-	ambienteId INT,                                                  -- ID do ambiente (chave estrangeira)
+	dispositivoId INT,                                               -- ID do dispositivo (chave estrangeira)
 
 	FOREIGN KEY (usuarioId) REFERENCES Usuarios(usuarioId),          -- Relacionamento com Usuarios
-	FOREIGN KEY (ambienteId) REFERENCES Ambientes(ambienteId)        -- Relacionamento com Ambientes
-)
-
--- ========================================
--- CRIA A TABELA DE TIPOS DE SENSORES
--- ========================================
-CREATE TABLE TipoSensores(
-	tipoSensorId INT PRIMARY KEY,                                    -- Identificador único do tipo de sensor
-	nomeTecnico VARCHAR(50),                                         -- Nome técnico do sensor
-	parametroMedido VARCHAR(50)                                      -- Parâmetro que o sensor mede
-)
-
--- ========================================
--- CRIA A TABELA DE SENSORES
--- ========================================
-CREATE TABLE Sensores(
-	sensorId INT PRIMARY KEY,                                        -- Identificador único do sensor
-	sensorNome VARCHAR(50),                                          -- Nome do sensor
-	tipoSensorId INT,                                                -- Tipo do sensor (chave estrangeira)
-	ambienteId INT,
-
-	FOREIGN KEY (tipoSensorId) REFERENCES TipoSensores(tipoSensorId),-- Relacionamento com TipoSensores
-	FOREIGN KEY (ambienteId) REFERENCES Ambientes(ambienteId)		 -- Relacionamento com Ambientes
+	FOREIGN KEY (dispositivoId) REFERENCES Dispositivos(dispositivoId)        -- Relacionamento com Dispositivos
 )
 
 -- ========================================
@@ -71,8 +49,7 @@ CREATE TABLE Medidas(
 	medidaId INT PRIMARY KEY,
 	valorMedido DECIMAL(18,2),
 	horarioMedicao DATETIME,
-	parametro varchar(20),
-	sensorId INT,
+	dispositivoId INT,
 
-	FOREIGN KEY (sensorId) REFERENCES Sensores(sensorId)
+	FOREIGN KEY (dispositivoId) REFERENCES Dispositivos(dispositivoId)
 )

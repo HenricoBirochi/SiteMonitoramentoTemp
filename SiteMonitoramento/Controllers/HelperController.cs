@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SiteMonitoramento.DAO;
 using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace SiteMonitoramento.Controllers
 {

@@ -2,10 +2,10 @@
 
 namespace SiteMonitoramento.Models
 {
-    public class UsuarioAmbienteDTO
+    public class UsuarioDispositivoDTO
     {
         //Esta classe apenas serve para fazer o select com join que esta dentro da classe UsuarioSensorDAO
-        public UsuarioAmbiente UsuarioAmbiente { get; set; }//Ela vai facilitar esse processo dessa select com join
+        public UsuarioDispositivo UsuarioDispositivo { get; set; }//Ela vai facilitar esse processo dessa select com join
         public string UsuarioNome { get; set; }
         public string Email { get; set; }
         public string CPF { get; set; }
@@ -20,6 +20,6 @@ namespace SiteMonitoramento.Models
                 return string.Empty;
             }
         }
-        public string AmbienteNome { get; set; }
+        public string DispositivoNome { get; set; }
     }
 }

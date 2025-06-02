@@ -5,17 +5,17 @@ USE HephaiTech
 GO
 
 -- ========================================
--- PROCEDURE: spInserirSensor
--- Descrição: Insere um novo registro na tabela Sensores
+-- PROCEDURE: spInserirDispositivos
+-- Descrição: Insere um novo registro na tabela Dispositivos
 -- Parâmetros: sensorId (INT), sensorNome (NVARCHAR), tipoSensorId (INT)
 -- ========================================
-CREATE PROCEDURE spInserirAmbientes
-    @ambienteId INT,
-    @ambienteNome NVARCHAR(40)
+CREATE PROCEDURE spInserirDispositivos
+    @dispositivoId INT,
+    @dispositivoNome NVARCHAR(40)
 AS
 BEGIN
-    INSERT INTO Ambientes (ambienteId, ambienteNome)
-    VALUES (@ambienteId, @ambienteNome)
+    INSERT INTO Dispositivos (dispositivoId, dispositivoNome)
+    VALUES (@dispositivoId, @dispositivoNome)
 END
 GO
 
@@ -24,30 +24,30 @@ GO
 -- Descrição: Atualiza os dados de um sensor existente na tabela Sensores
 -- Parâmetros: sensorId (INT), sensorNome (NVARCHAR), tipoSensorId (INT)
 -- ========================================
-CREATE PROCEDURE spAlterarAmbientes
-    @ambienteId INT,
-    @ambienteNome NVARCHAR(40)
+CREATE PROCEDURE spAlterarDispositivos
+    @dispositivoId INT,
+    @dispositivoNome NVARCHAR(40)
 AS
 BEGIN
-    UPDATE Ambientes
-    SET ambienteNome = @ambienteNome
-    WHERE ambienteId = @ambienteId
+    UPDATE Dispositivos
+    SET dispositivoNome = @dispositivoNome
+    WHERE dispositivoId = @dispositivoId
 END
 GO
 
 -- ========================================
--- PROCEDURE: spListarUsuarioSensorJoin
+-- PROCEDURE: spListarDispositivoMedidasJoin
 -- Descrição: Retorna a relação entre as tabelas UsuarioSensores, Usuarios e Sensores com dados detalhados
 -- Sem parâmetros
 -- ========================================
-CREATE PROCEDURE spListarAmbienteSensorTipoSensorJoin
-	@ambienteId INT
+CREATE PROCEDURE spListarDispositivoMedidasJoin
+	@dispositivoId INT
 AS
 BEGIN
     SELECT 
-        s.sensorNome, ts.nomeTecnico, ts.parametroMedido
-    FROM Sensores s
-	INNER JOIN TipoSensores ts ON s.tipoSensorId = ts.tipoSensorId
-	where s.ambienteId = @ambienteId
+        d.dispositivoNome, m.valorMedido, m.horarioMedicao
+    FROM Dispositivos d
+	INNER JOIN Medidas m ON d.dispositivoId = m.dispositivoId
+	where d.dispositivoId = @dispositivoId
 END
 GO

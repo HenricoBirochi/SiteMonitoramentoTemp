@@ -1,11 +1,11 @@
-﻿@model List<Ambiente>
+﻿@model List<Dispositivo>
 @section EstilosExtras
 {
     <link href="/css/grid.css" rel="stylesheet">
 }
 
 <div class="titulo">
-    <h3>Ambientes</h3>
+    <h3>Dispositivos</h3>
     <form asp-action="Create" method="post">
         <button type="submit" class="botao">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard-plus-icon lucide-clipboard-plus"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><path d="M9 14h6" /><path d="M12 17v-6" /></svg>
@@ -13,27 +13,27 @@
     </form>
 </div>
 <div class="caixona">
-    @foreach (var ambiente in Model)
+    @foreach (var dispositivo in Model)
     {
         <div class="caixas">
             <div class="parametro"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#f58f05" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mountain-snow-icon lucide-mountain-snow"><path d="m8 3 4 8 5-5 5 15H2L8 3z" /><path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19" /></svg></div>
             <div class="dados">
-                <p>@ambiente.AmbienteNome</p>
+                <p>@dispositivo.DispositivoNome</p>
             </div>
-            <form asp-action="VisualizarAmbiente" method="get">
-                <input type="hidden" name="id" value="@ambiente.AmbienteId" />
+            <form asp-action="VisualizarDispositivo" method="get">
+                <input type="hidden" name="id" value="@dispositivo.DispositivoId" />
                 <button class="botao" type="submit">
                     Exibir a lista de sensores que pertencem a esse ambiente
                 </button>
             </form>
             <form asp-action="Edit" method="get" class="formEdit">
-                <input name="id" value="@ambiente.AmbienteId" type="hidden" />
+                <input name="id" value="@dispositivo.DispositivoId" type="hidden" />
                 <button type="submit" class="botao">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil-icon lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /><path d="m15 5 4 4" /></svg>
                 </button>
             </form>
-            <form asp-action="Delete" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este Ambiente?');" class="formDelete">
-                <input name="id" value="@ambiente.AmbienteId" type="hidden" />
+            <form asp-action="DeleteAssincrono" method="post" onsubmit="return DeletarDispo(event, this)" class="formDelete">
+                <input name="id" value="@dispositivo.DispositivoId" type="hidden" />
                 <button type="submit" class="botao">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M3 6h18" /><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" /><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" /><line x1="10" x2="10" y1="11" y2="17" /><line x1="14" x2="14" y1="11" y2="17" /></svg>
                 </button>
@@ -41,3 +41,28 @@
         </div>
     }
 </div>
+
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function DeletarDispo(event, form){
+            event.preventDefault(); // impede envio automático
+    
+            Swal.fire({
+                title: 'Tem certeza?',
+                text: 'Esta ação não pode ser desfeita!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, deletar!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+    
+            return false;
+        }
+    </script>
+}
