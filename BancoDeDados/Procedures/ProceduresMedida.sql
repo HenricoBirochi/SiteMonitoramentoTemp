@@ -41,7 +41,7 @@ BEGIN
 END
 GO
 
-create procedure spConsultaAvancadaMedidas
+CREATE PROCEDURE spConsultaAvancadaMedidas
 (
 @valorMedido decimal(18,2),
 @dataInicial datetime,
@@ -58,6 +58,7 @@ begin
 	select m.*
 	from Medidas m
 	where m.horarioMedicao between @dataInicial and @dataFinal and
-	m.valorMedido between @valorMedidoIni and @valorMedidoFim;
+	m.valorMedido between @valorMedidoIni and @valorMedidoFim
+	order by m.horarioMedicao
 end
 GO

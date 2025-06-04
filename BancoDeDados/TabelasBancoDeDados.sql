@@ -51,5 +51,5 @@ CREATE TABLE Medidas(
 	horarioMedicao DATETIME,
 	dispositivoId INT,
 
-	FOREIGN KEY (dispositivoId) REFERENCES Dispositivos(dispositivoId)
+	FOREIGN KEY (dispositivoId) REFERENCES Dispositivos(dispositivoId) ON DELETE CASCADE
 )

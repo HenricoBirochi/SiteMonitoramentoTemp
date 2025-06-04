@@ -6,7 +6,7 @@ let grafico;
 // Função para buscar dados da API
 function buscaDadosApi() {
 
-    const domain = 'ec2-13-218-19-179.compute-1.amazonaws.com';
+    const domain = 'ec2-3-89-90-143.compute-1.amazonaws.com';
     const linkApi = `http://${domain}:1026/v2/entities/urn:ngsi-ld:Temp:${dispositivoId}/attrs/temperature`;
 
     $.ajax({
@@ -18,16 +18,39 @@ function buscaDadosApi() {
             'fiware-servicepath': '/'
         },
         success: function (dados) {
+
+            // Formata a data para o padrão brasileiro
+            let data = new Date(dados.metadata.TimeInstant.value);
+            let dataFormatada = data.toLocaleString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            })
+
             // Adiciona novo dado aos arrays
-            horarios.push(dados.metadata.TimeInstant.value);
+            horarios.push(dataFormatada);
             temperaturas.push(dados.value);
-            
+
+            // Atualiza erro e setpoint se malha fechada estiver ativa
+            if (document.getElementById('malhaFechada').checked && setpoint !== null) {
+                let erro = Math.abs(setpoint - dados.value);
+                erros.push(erro);
+                setpoints.push(setpoint);
+            } else {
+                erros.push(null);
+                setpoints.push(null);
+            }
 
             // Mantém apenas os últimos N pontos (ex: últimos 20)
             const maxPontos = 20;
             if (horarios.length > maxPontos) {
                 horarios.shift();
                 temperaturas.shift();
+                erros.shift();
+                setpoints.shift();
             }
 
             // Atualiza o gráfico
@@ -42,7 +65,7 @@ function buscaDadosApi() {
                         ${dados.value}
                     </td>
                     <td>
-                        ${dados.metadata.TimeInstant.value}
+                        ${dataFormatada}
                     </td>
                 </tr>
             `;
@@ -66,7 +89,16 @@ function atualizaGrafico() {
     if (grafico) {
         grafico.data.labels = horarios;
         grafico.data.datasets[0].data = temperaturas;
-        grafico.update();
+
+        if (grafico.data.datasets.length > 1) {
+            grafico.data.datasets[1].data = setpoints;
+            grafico.data.datasets[2].data = erros;
+        }
+
+        grafico.update({
+            duration: 800,
+            easing: 'easeOutQuad'
+        });
     }
 }
 
@@ -113,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //Termometro
     termometroGauge = new JustGage({
         id: "termometro-gauge",
-        value: 0,   
+        value: 0,
         min: 0,
         max: 100,
         title: "Temperatura",
@@ -126,4 +158,74 @@ document.addEventListener('DOMContentLoaded', function () {
     // Busca dados imediatamente e depois a cada 5 segundos
     buscaDadosApi();
     setInterval(buscaDadosApi, 1000);
+});
+
+
+
+// Erro e SetPoint
+let setpoint = null;
+let setpointInput = null;
+let erros = [];
+let setpoints = [];
+
+document.getElementById('malhaAberta').addEventListener('change', function () {
+    if (this.checked) {
+        // Remove o input de setpoint se existir
+        if (setpointInput) {
+            setpointInput.remove();
+            setpointInput = null;
+        }
+
+        // Remove as linhas de setpoint e erro do gráfico
+        if (grafico.data.datasets.length > 1) {
+            grafico.data.datasets.splice(1, 2);
+            grafico.update();
+        }
+
+        setpoint = null;
+        erros = [];
+        setpoints = [];
+    }
+});
+
+document.getElementById('malhaFechada').addEventListener('change', function () {
+    if (this.checked && !setpointInput) {
+        // Cria o input para o setpoint
+        setpointInput = document.createElement('input');
+        setpointInput.type = 'number';
+        setpointInput.placeholder = 'Defina o Setpoint (ºC)';
+        setpointInput.className = 'form-control mt-2';
+        setpointInput.style.width = '200px';
+        this.parentElement.appendChild(setpointInput);
+
+        setpointInput.addEventListener('input', function () {
+            const val = parseFloat(this.value);
+            if (!isNaN(val)) {
+                setpoint = val;
+                atualizaGrafico(); // Recalcula os erros quando o setpoint muda
+            }
+        });
+
+        // Preenche setpoints e erros com base nos dados existentes
+        setpoints = horarios.map(() => setpoint ?? 0);
+        erros = temperaturas.map(temp => Math.abs(temp - (setpoint ?? 0)));
+
+        // Adiciona datasets de setpoint e erro no gráfico
+        grafico.data.datasets.push({
+            label: 'Setpoint',
+            data: setpoints,
+            borderColor: 'orange',
+            borderDash: [5, 5],
+            fill: false,
+        });
+
+        grafico.data.datasets.push({
+            label: 'Erro |Temperatura - Setpoint|',
+            data: erros,
+            borderColor: 'red',
+            fill: false,
+        });
+
+        grafico.update();
+    }
 });

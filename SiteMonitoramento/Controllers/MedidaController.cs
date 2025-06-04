@@ -21,8 +21,8 @@ namespace SiteMonitoramento.Controllers
 
         public async Task<IActionResult> ConsultaEAdicionaMedidas(int dispositivoId)
         {
-            string domain = "ec2-13-218-19-179.compute-1.amazonaws.com";
-            string url = $"http://{domain}:8666/STH/v1/contextEntities/type/Temp/id/urn:ngsi-ld:Temp:{dispositivoId}/attributes/temperature?lastN=50";
+            string domain = "ec2-54-144-70-35.compute-1.amazonaws.com";
+            string url = $"http://{domain}:8666/STH/v1/contextEntities/type/Temp/id/urn:ngsi-ld:Temp:{dispositivoId}/attributes/temperature?lastN=100";
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Add("fiware-service", "smart");
@@ -84,12 +84,36 @@ namespace SiteMonitoramento.Controllers
             try
             {
                 MedidaDAO dao = new MedidaDAO();
+
                 if (dataInicial.Date == Convert.ToDateTime("01/01/0001"))
                     dataInicial = SqlDateTime.MinValue.Value;
                 if (dataFinal.Date == Convert.ToDateTime("01/01/0001"))
                     dataFinal = SqlDateTime.MaxValue.Value;
+
                 var lista = dao.ConsultaAvancadaMedidas(valorMedido, dataInicial, dataFinal);
+
                 return PartialView("pvGridMedidas", lista);
+            }
+            catch (Exception erro)
+            {
+                return Json(new { erro = true, msg = erro.Message });
+            }
+        }
+        public IActionResult ObtemDadosConsultaAvancadaJson(double valorMedido, DateTime dataInicial, DateTime dataFinal)
+        {
+            try
+            {
+                MedidaDAO dao = new MedidaDAO();
+
+                if (dataInicial.Date == Convert.ToDateTime("01/01/0001"))
+                    dataInicial = SqlDateTime.MinValue.Value;
+                if (dataFinal.Date == Convert.ToDateTime("01/01/0001"))
+                    dataFinal = SqlDateTime.MaxValue.Value;
+
+                var lista = dao.ConsultaAvancadaMedidas(valorMedido, dataInicial, dataFinal);
+
+                // Retorna a lista como JSON
+                return Json(lista);
             }
             catch (Exception erro)
             {
