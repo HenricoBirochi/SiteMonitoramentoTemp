@@ -62,7 +62,14 @@ namespace SiteMonitoramento.Controllers
                             int medidaId = dao.ProximoId();
                             var medidaBanco = dao.Consulta(medidaId);
 
-                            if (medidaBanco != null && medidaBanco.HorarioMedicao == data)
+                            var lista = dao.Listagem();
+                            foreach (var medidaTeste in lista)
+                            {
+                                if (medidaTeste.HorarioMedicao == data)
+                                    continue;
+                            }
+
+                            if (medidaBanco != null)
                                 continue;
 
                             var medida = new Medida

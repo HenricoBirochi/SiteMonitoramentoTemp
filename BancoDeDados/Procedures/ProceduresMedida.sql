@@ -59,6 +59,6 @@ begin
 	from Medidas m
 	where m.horarioMedicao between @dataInicial and @dataFinal and
 	m.valorMedido between @valorMedidoIni and @valorMedidoFim
-	order by m.horarioMedicao
+	order by m.horarioMedicao desc
 end
 GO
