@@ -3,12 +3,14 @@
     <tr>
         <th>Temperatura em ºC</th>
         <th>Data e Horário da Medição</th>
+        <th>Estado</th>
     </tr>
     @foreach (var medida in Model)
     {
         <tr>
             <td>@medida.ValorMedido</td>
             <td>@medida.HorarioMedicao</td>
+            <td>@medida.Estado</td>
         </tr>
     }
 </table>

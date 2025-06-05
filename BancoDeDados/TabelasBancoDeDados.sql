@@ -38,8 +38,8 @@ CREATE TABLE UsuarioDispositivo(
 	usuarioId INT,                                                   -- ID do usuário (chave estrangeira)
 	dispositivoId INT,                                               -- ID do dispositivo (chave estrangeira)
 
-	FOREIGN KEY (usuarioId) REFERENCES Usuarios(usuarioId),          -- Relacionamento com Usuarios
-	FOREIGN KEY (dispositivoId) REFERENCES Dispositivos(dispositivoId)        -- Relacionamento com Dispositivos
+	FOREIGN KEY (usuarioId) REFERENCES Usuarios(usuarioId) ON DELETE CASCADE,          -- Relacionamento com Usuarios
+	FOREIGN KEY (dispositivoId) REFERENCES Dispositivos(dispositivoId) ON DELETE CASCADE       -- Relacionamento com Dispositivos
 )
 
 -- ========================================
@@ -49,6 +49,7 @@ CREATE TABLE Medidas(
 	medidaId INT PRIMARY KEY,
 	valorMedido DECIMAL(18,2),
 	horarioMedicao DATETIME,
+	estado VARCHAR(40),
 	dispositivoId INT,
 
 	FOREIGN KEY (dispositivoId) REFERENCES Dispositivos(dispositivoId) ON DELETE CASCADE

@@ -13,11 +13,12 @@ CREATE PROCEDURE spInserirMedidas
     @medidaId INT,
     @valorMedido DECIMAL(18,2),
     @horarioMedicao DATETIME,
+	@estado VARCHAR(40),
 	@dispositivoId int
 AS
 BEGIN
-    INSERT INTO Medidas (medidaId, valorMedido, horarioMedicao, dispositivoId)
-    VALUES (@medidaId, @valorMedido, @horarioMedicao, @dispositivoId)
+    INSERT INTO Medidas (medidaId, valorMedido, horarioMedicao, estado, dispositivoId)
+    VALUES (@medidaId, @valorMedido, @horarioMedicao, @estado, @dispositivoId)
 END
 GO
 
@@ -30,12 +31,14 @@ CREATE PROCEDURE spAlterarMedidas
 	@medidaId INT,
     @valorMedido DECIMAL(18,2),
     @horarioMedicao DATETIME,
+	@estado VARCHAR(40),
     @dispositivoId INT
 AS
 BEGIN
     UPDATE Medidas
     SET valorMedido = @valorMedido,
         horarioMedicao = @horarioMedicao,
+		estado = @estado,
         dispositivoId = @dispositivoId
     WHERE medidaId = @medidaId
 END
@@ -45,7 +48,8 @@ CREATE PROCEDURE spConsultaAvancadaMedidas
 (
 @valorMedido decimal(18,2),
 @dataInicial datetime,
-@dataFinal datetime
+@dataFinal datetime,
+@estado varchar(40)
 )
 as
 begin
@@ -58,7 +62,8 @@ begin
 	select m.*
 	from Medidas m
 	where m.horarioMedicao between @dataInicial and @dataFinal and
-	m.valorMedido between @valorMedidoIni and @valorMedidoFim
+	m.valorMedido between @valorMedidoIni and @valorMedidoFim and
+	m.estado like '%' + @estado + '%'
 	order by m.horarioMedicao desc
 end
 GO

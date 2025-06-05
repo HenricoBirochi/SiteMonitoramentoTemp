@@ -6,7 +6,7 @@ let grafico;
 // Função para buscar dados da API
 function buscaDadosApi() {
 
-    const domain = 'ec2-3-89-90-143.compute-1.amazonaws.com';
+    const domain = 'ec2-52-91-71-233.compute-1.amazonaws.com';
     const linkApi = `http://${domain}:1026/v2/entities/urn:ngsi-ld:Temp:${dispositivoId}/attrs/temperature`;
 
     $.ajax({
@@ -18,6 +18,8 @@ function buscaDadosApi() {
             'fiware-servicepath': '/'
         },
         success: function (dados) {
+
+            avisoTemperaturaCritica(dados.value);
 
             // Formata a data para o padrão brasileiro
             let data = new Date(dados.metadata.TimeInstant.value);
@@ -229,3 +231,13 @@ document.getElementById('malhaFechada').addEventListener('change', function () {
         grafico.update();
     }
 });
+
+function avisoTemperaturaCritica(dadosRecebidos) {
+    let Aviso = document.getElementById("aviso");
+    if (dadosRecebidos >= 50) {
+        Aviso.style.display = "inline-block";
+    }
+    else {
+        Aviso.style.display = "none";
+    }
+}

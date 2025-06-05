@@ -2,18 +2,20 @@
     let vValorMedido = document.getElementById('valorMedido').value;
     let vDataInicial = document.getElementById('dataInicial').value;
     let vDataFinal = document.getElementById('dataFinal').value;
+    let vEstado = document.getElementById('estado').value;
 
-    buscaDadosParaLista(vValorMedido, vDataInicial, vDataFinal);
-    graficoHistorico(vValorMedido, vDataInicial, vDataFinal);
+    buscaDadosParaLista(vValorMedido, vDataInicial, vDataFinal, vEstado);
+    graficoHistorico(vValorMedido, vDataInicial, vDataFinal, vEstado);
 }
 
-function buscaDadosParaLista(vValorMedido, vDataInicial, vDataFinal) {
+function buscaDadosParaLista(vValorMedido, vDataInicial, vDataFinal, vEstado) {
     $.ajax({
         url: "/Medida/ObtemDadosConsultaAvancada",
         data: {
             valorMedido: vValorMedido,
             dataInicial: vDataInicial,
-            dataFinal: vDataFinal
+            dataFinal: vDataFinal,
+            estado: vEstado
         },
         success: function (dados) {
             if (dados.erro != undefined) {
@@ -33,29 +35,32 @@ function buscaDadosParaLista(vValorMedido, vDataInicial, vDataFinal) {
 let horarios1 = [];
 let temperaturas1 = [];
 let grafico1;
-function graficoHistorico(vValorMedido, vDataInicial, vDataFinal) {
+function graficoHistorico(vValorMedido, vDataInicial, vDataFinal, vEstado) {
     // Função para buscar dados da API
     $.ajax({
         url: '/Medida/ObtemDadosConsultaAvancadaJson',
         data: {
             valorMedido: vValorMedido,
             dataInicial: vDataInicial,
-            dataFinal: vDataFinal
+            dataFinal: vDataFinal,
+            estado: vEstado
         },
         success: function (dados) {
-            console.log("Dados recebidos do JSON:", dados);
+            let invertido = dados.reverse();
 
-            if (dados.erro) {
-                console.log(dados.msg);
+            console.log("Dados recebidos do JSON:", invertido);
+
+            if (invertido.erro) {
+                console.log(invertido.msg);
                 return;
             }
-
+            
             // Antes de popular os dados
             horarios1 = [];
             temperaturas1 = [];
 
             // AQUI você já tem a lista e pode montar o gráfico
-            dados.forEach(item => {
+            invertido.forEach(item => {
                 horarios1.push(item.horarioMedicao);
                 temperaturas1.push(item.valorMedido);
             });

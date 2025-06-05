@@ -12,6 +12,7 @@ namespace SiteMonitoramento.Models
 
         [JsonProperty("recvTime")]
         public DateTime HorarioMedicao { get; set; }
+        public string Estado { get; set; }
 
         public int DispositivoId { get; set; }
     }

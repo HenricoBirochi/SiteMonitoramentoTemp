@@ -21,7 +21,7 @@ namespace SiteMonitoramento.Controllers
 
         public async Task<IActionResult> ConsultaEAdicionaMedidas(int dispositivoId)
         {
-            string domain = "ec2-54-144-70-35.compute-1.amazonaws.com";
+            string domain = "ec2-52-91-71-233.compute-1.amazonaws.com";
             string url = $"http://{domain}:8666/STH/v1/contextEntities/type/Temp/id/urn:ngsi-ld:Temp:{dispositivoId}/attributes/temperature?lastN=100";
 
             var request = new HttpRequestMessage(HttpMethod.Get, url);
@@ -72,11 +72,18 @@ namespace SiteMonitoramento.Controllers
                             if (medidaBanco != null)
                                 continue;
 
+                            string estado;
+                            if (valor >= 50)
+                                estado = "Critico";
+                            else
+                                estado = "Normal";
+
                             var medida = new Medida
                             {
                                 DispositivoId = dispositivoId,
                                 ValorMedido = valor,
                                 HorarioMedicao = data,
+                                Estado = estado,
                                 MedidaId = medidaId,
                             };
                             dao.Inserir(medida);
@@ -86,18 +93,19 @@ namespace SiteMonitoramento.Controllers
             }
             return RedirectToAction("Index", "Dispositivo");
         }
-        public IActionResult ObtemDadosConsultaAvancada(double valorMedido, DateTime dataInicial, DateTime dataFinal)
+        public IActionResult ObtemDadosConsultaAvancada(double valorMedido, DateTime dataInicial, DateTime dataFinal, string estado)
         {
             try
             {
                 MedidaDAO dao = new MedidaDAO();
-
+                if (string.IsNullOrEmpty(estado))
+                    estado = "";
                 if (dataInicial.Date == Convert.ToDateTime("01/01/0001"))
                     dataInicial = SqlDateTime.MinValue.Value;
                 if (dataFinal.Date == Convert.ToDateTime("01/01/0001"))
                     dataFinal = SqlDateTime.MaxValue.Value;
 
-                var lista = dao.ConsultaAvancadaMedidas(valorMedido, dataInicial, dataFinal);
+                var lista = dao.ConsultaAvancadaMedidas(valorMedido, dataInicial, dataFinal, estado);
 
                 return PartialView("pvGridMedidas", lista);
             }
@@ -106,18 +114,19 @@ namespace SiteMonitoramento.Controllers
                 return Json(new { erro = true, msg = erro.Message });
             }
         }
-        public IActionResult ObtemDadosConsultaAvancadaJson(double valorMedido, DateTime dataInicial, DateTime dataFinal)
+        public IActionResult ObtemDadosConsultaAvancadaJson(double valorMedido, DateTime dataInicial, DateTime dataFinal, string estado)
         {
             try
             {
                 MedidaDAO dao = new MedidaDAO();
-
+                if (string.IsNullOrEmpty(estado))
+                    estado = "";
                 if (dataInicial.Date == Convert.ToDateTime("01/01/0001"))
                     dataInicial = SqlDateTime.MinValue.Value;
                 if (dataFinal.Date == Convert.ToDateTime("01/01/0001"))
                     dataFinal = SqlDateTime.MaxValue.Value;
 
-                var lista = dao.ConsultaAvancadaMedidas(valorMedido, dataInicial, dataFinal);
+                var lista = dao.ConsultaAvancadaMedidas(valorMedido, dataInicial, dataFinal, estado);
 
                 // Retorna a lista como JSON
                 return Json(lista);

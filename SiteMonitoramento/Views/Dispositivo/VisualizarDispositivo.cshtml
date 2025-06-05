@@ -28,6 +28,10 @@
     </tbody>
 </table>
 
+<div class="alert alert-warning" role="alert" id="aviso" style="display:none;"> 
+    ⚠️ Este é um aviso importante! Os dados precisam ser salvos, a temperatura esta crítica
+</div>
+
 <form asp-action="ConsultaEAdicionaMedidas" asp-controller="Medida" method="post">
     <input name="dispositivoId" value="@Model" hidden>
     <button type="submit" class="btn btn-info">Salvar os últimos 100 dados</button>
@@ -47,6 +51,10 @@
         <div class="col-lg-2">
             <br />
             <input type="date" id="dataFinal" class="form-control" />
+        </div>
+        <div class="col-lg-2">
+            Estado <br />
+            <input type="text" id="estado" class="form-control" />
         </div>
         <div class="col-lg-1">
             <br />

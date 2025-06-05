@@ -34,20 +34,3 @@ BEGIN
     WHERE dispositivoId = @dispositivoId
 END
 GO
-
--- ========================================
--- PROCEDURE: spListarDispositivoMedidasJoin
--- Descrição: Retorna a relação entre as tabelas UsuarioSensores, Usuarios e Sensores com dados detalhados
--- Sem parâmetros
--- ========================================
-CREATE PROCEDURE spListarDispositivoMedidasJoin
-	@dispositivoId INT
-AS
-BEGIN
-    SELECT 
-        d.dispositivoNome, m.valorMedido, m.horarioMedicao
-    FROM Dispositivos d
-	INNER JOIN Medidas m ON d.dispositivoId = m.dispositivoId
-	where d.dispositivoId = @dispositivoId
-END
-GO

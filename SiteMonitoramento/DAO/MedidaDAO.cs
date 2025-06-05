@@ -10,11 +10,12 @@ namespace SiteMonitoramento.DAO
     {
         protected override SqlParameter[] CriaParametros(Medida medida)
         {
-            SqlParameter[] parametros = new SqlParameter[4];
+            SqlParameter[] parametros = new SqlParameter[5];
             parametros[0] = new SqlParameter("medidaId", medida.MedidaId);
             parametros[1] = new SqlParameter("valorMedido", medida.ValorMedido);
             parametros[2] = new SqlParameter("horarioMedicao", medida.HorarioMedicao);
-            parametros[3] = new SqlParameter("dispositivoId", medida.DispositivoId);
+            parametros[3] = new SqlParameter("estado", medida.Estado);
+            parametros[4] = new SqlParameter("dispositivoId", medida.DispositivoId);
             return parametros;
         }
 
@@ -24,6 +25,7 @@ namespace SiteMonitoramento.DAO
             m.MedidaId = Convert.ToInt32(registro["medidaId"]);
             m.ValorMedido = Convert.ToDouble(registro["valorMedido"]);
             m.HorarioMedicao = Convert.ToDateTime(registro["horarioMedicao"]);
+            m.Estado = registro["estado"].ToString();
             m.DispositivoId = Convert.ToInt32(registro["dispositivoId"]);
             return m;
         }
@@ -39,13 +41,14 @@ namespace SiteMonitoramento.DAO
         }
 
         //Serve para fazer a consulta avançada
-        public List<Medida> ConsultaAvancadaMedidas(double valorMedido, DateTime dataInicial, DateTime dataFinal)
+        public List<Medida> ConsultaAvancadaMedidas(double valorMedido, DateTime dataInicial, DateTime dataFinal, string estado)
         {
             SqlParameter[] p = 
             {
                 new SqlParameter("valorMedido", valorMedido),
                 new SqlParameter("dataInicial", dataInicial),
                 new SqlParameter("dataFinal", dataFinal),
+                new SqlParameter("estado", estado),
             };
             var tabela = HelperDAO.ExecutaProcSelect("spConsultaAvancadaMedidas", p);
             var lista = new List<Medida>();

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
 using SiteMonitoramento.Models;
-using SiteMonitoramento.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -33,29 +32,6 @@ namespace SiteMonitoramento.DAO
         protected override void SetTabela()
         {
             Tabela = "Dispositivos";
-        }
-
-        //Lista os as medidas que estão relacionadas com um dispositivo
-        private DispositivoMedidasViewModel MontaDispositivoMedidas(DataRow registro)
-        {
-            DispositivoMedidasViewModel dm = new DispositivoMedidasViewModel();
-            dm.DispositivoNome = registro["dispositivoNome"].ToString();
-            dm.ValorMedido = Convert.ToDouble(registro["valorMedido"]);
-            dm.HorarioMedicao = Convert.ToDateTime(registro["horarioMedicao"]);
-            return dm;
-        }
-        public List<DispositivoMedidasViewModel> ListagemDispositivoMedidasJoin(int dispositivoId)
-        {
-            var lista = new List<DispositivoMedidasViewModel>();
-            var parametros = new SqlParameter[]
-            {
-                new SqlParameter("dispositivoId", dispositivoId),
-            };
-            string sql = "spListarDispositivoMedidasJoin";
-            DataTable tabela = HelperDAO.ExecutaProcSelect(sql, parametros);
-            foreach (DataRow registro in tabela.Rows)
-                lista.Add(MontaDispositivoMedidas(registro));
-            return lista;
         }
     }
 }
